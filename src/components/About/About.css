@@ -1,0 +1,25 @@
+.about {
+  display: flex;
+}
+.about__avatar {
+  height: 464px;
+  width: 464px;
+  border-radius: 1000px;
+  background-image: url(../../images/avatar.jpg);
+}
+.about__wrapper {
+  display: flex;
+}
+
+.about__title {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 46px;
+}
+.about__text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+}
