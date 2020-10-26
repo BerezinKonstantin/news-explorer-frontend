@@ -1,9 +1,9 @@
 import React from 'react';
-
+import avatar from '../../images/avatar.jpg'
 function About() {
   return (
     <div className='about'>
-      <img className='about__avatar' alt='Аватар пользователя' src='#'/>
+      <img className='about__avatar' alt='Аватар пользователя' src={avatar}/>
       <div className='about__wrapper'>
         <h2 className='about__title'>
           Об авторе

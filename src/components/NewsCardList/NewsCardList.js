@@ -4,7 +4,7 @@ import NewsCard from '../NewsCard/NewsCard';
 
 function NewsCardList() {
   return (
-    <ul className='cards'>
+    <ul className='card-list'>
       <NewsCard />
       <NewsCard />
       <NewsCard />
