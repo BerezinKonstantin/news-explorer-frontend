@@ -59,3 +59,15 @@
   box-sizing: content-box;
   padding: 0;
 }
+.search-form__submit-button:hover {
+  background: #347eff;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+  transition: linear 0.2s;
+  cursor: pointer;
+}
+.search-form__submit-button:focus {
+  background: #2a65cc;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+  transition: linear 0.2s;
+  cursor: pointer;
+}

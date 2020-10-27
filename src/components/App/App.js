@@ -4,23 +4,34 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import SavedNews from '../SavedNews/SavedNews';
-
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import PopupForLogin from '../PopupForLogin/PopupForLogin';
+import PopupForSignup from '../PopupForSignup/PopupForSignup';
 import './App.css';
 
 function App() {
   const isLogin = true;
   let pathname = useLocation().pathname;
   const [isHeaderBlack, setIsHeaderBlack] = useState();
+  const [isPopupForLoginOpen, setIsPopupForLoginOpen] = useState(false);
+  const [isPopupForSignupOpen, setIsPopupForSignupOpen] = useState(false);
+  function handlePopupForSignup() {
+    setIsPopupForSignupOpen(true);
+  }
+  function handlePopupForLogin() {
+    setIsPopupForLoginOpen(true);
+  }
   function handleHeaderChange(pathname) {
-    
     if (pathname === '/saved-news') {
       setIsHeaderBlack(true)
     } if (pathname === '/') {
       setIsHeaderBlack(false)
     };
   }
-  
+  function handleCloseAllPopups() {
+      setIsPopupForLoginOpen(false);
+      setIsPopupForSignupOpen(false);
+    }
+
   useEffect(() => {
     handleHeaderChange(pathname)
   }, [pathname]);
@@ -30,6 +41,7 @@ function App() {
       <Header
        isLogin={isLogin}
        isHeaderBlack={isHeaderBlack}
+       onPopupForLogin={handlePopupForLogin}
       />
       <Switch>
         <Route exact path="/">
@@ -40,7 +52,14 @@ function App() {
         </Route>
       </Switch>
       <Footer />
-      <PopupWithForm />
+      <PopupForLogin
+      isOpen={isPopupForLoginOpen}
+      onClose={handleCloseAllPopups}
+      />
+      <PopupForSignup
+      isOpen={isPopupForSignupOpen}
+      onClose={handleCloseAllPopups}
+      />
     </div>
   );
 }

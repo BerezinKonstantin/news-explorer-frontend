@@ -27,7 +27,9 @@ function Header(props) {
          to='/saved-news'>
           Сохранённые статьи
         </NavLink>}
-        <button className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
+        <button 
+        className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
+        onClick={props.onPopupForLogin}
         >
           Выйти
         </button>
