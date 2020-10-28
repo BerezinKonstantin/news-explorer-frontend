@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import SavedNews from '../SavedNews/SavedNews';
 import PopupForLogin from '../PopupForLogin/PopupForLogin';
 import PopupForSignup from '../PopupForSignup/PopupForSignup';
+import PopupInfoTip from '../PopupInfoTip/PopupInfoTip';
 import './App.css';
 
 function App() {
@@ -14,11 +15,17 @@ function App() {
   const [isHeaderBlack, setIsHeaderBlack] = useState();
   const [isPopupForLoginOpen, setIsPopupForLoginOpen] = useState(false);
   const [isPopupForSignupOpen, setIsPopupForSignupOpen] = useState(false);
+  const [isPopupInfoTipOpen, setIsPopupInfoTipOpen] = useState(false);
   function handlePopupForSignup() {
-    setIsPopupForSignupOpen(true);
+    setIsPopupForSignupOpen(true)
+    setIsPopupForLoginOpen(false);
+  }
+  function handlePopupInfoTip() {
+    setIsPopupInfoTipOpen(true)
   }
   function handlePopupForLogin() {
-    setIsPopupForLoginOpen(true);
+    setIsPopupForSignupOpen(false)
+    setIsPopupForLoginOpen(true)
   }
   function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
@@ -29,9 +36,9 @@ function App() {
   }
   function handleCloseAllPopups() {
       setIsPopupForLoginOpen(false);
-      setIsPopupForSignupOpen(false);
-    }
-
+      setIsPopupForSignupOpen(false)
+      setIsPopupInfoTipOpen(false);
+  }
   useEffect(() => {
     handleHeaderChange(pathname)
   }, [pathname]);
@@ -41,7 +48,7 @@ function App() {
       <Header
        isLogin={isLogin}
        isHeaderBlack={isHeaderBlack}
-       onPopupForLogin={handlePopupForLogin}
+       onPopupForSignup={handlePopupForSignup}
       />
       <Switch>
         <Route exact path="/">
@@ -55,10 +62,18 @@ function App() {
       <PopupForLogin
       isOpen={isPopupForLoginOpen}
       onClose={handleCloseAllPopups}
+      onPopupForSignup={handlePopupForSignup}
       />
       <PopupForSignup
       isOpen={isPopupForSignupOpen}
       onClose={handleCloseAllPopups}
+      onPopupForLogin={handlePopupForLogin}
+      onSubmit={handlePopupInfoTip}
+      />
+      <PopupInfoTip
+      isOpen={isPopupInfoTipOpen}
+      onClose={handleCloseAllPopups}
+      onPopupForLogin={handlePopupForLogin}
       />
     </div>
   );

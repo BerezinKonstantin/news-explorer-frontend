@@ -29,9 +29,9 @@ function Header(props) {
         </NavLink>}
         <button 
         className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
-        onClick={props.onPopupForLogin}
+        onClick={props.onPopupForSignup}
         >
-          Выйти
+          Авторизоваться
         </button>
       </nav>
     </header>

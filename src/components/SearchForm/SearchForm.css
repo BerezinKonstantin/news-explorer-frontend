@@ -39,6 +39,7 @@
   flex-direction: row;
 }
 .search-form__input {
+  border: 1px solid #d1d2d6;
   display: flex;
   height: 64px;
   width: 608px;
