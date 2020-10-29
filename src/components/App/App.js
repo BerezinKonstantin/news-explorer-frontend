@@ -39,6 +39,9 @@ function App() {
       setIsPopupForSignupOpen(false)
       setIsPopupInfoTipOpen(false);
   }
+  function logout(){
+
+  }
   useEffect(() => {
     handleHeaderChange(pathname)
   }, [pathname]);
@@ -49,6 +52,7 @@ function App() {
        isLogin={isLogin}
        isHeaderBlack={isHeaderBlack}
        onPopupForSignup={handlePopupForSignup}
+       onLogout={logout}
       />
       <Switch>
         <Route exact path="/">

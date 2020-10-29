@@ -108,9 +108,26 @@
   height: 40px;
   border: none;
   background-color: white;
-  background-image: url(../../images/delete-icon.svg);
+  background-image: url(../../images/delete-icon-normal.svg);
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 8px;
   padding: 0;
+}
+.card__button_delete {
+  background-image: url(../../images/delete-icon-normal.svg);
+}
+.card__button_delete:hover {
+  background-image: url(../../images/delete-icon-dark.svg);
+  transition: linear 0.3s;
+}
+.card__button_save {
+  background-image: url(../../images/save-icon-normal.svg);
+}
+.card__button_save:hover {
+  background-image: url(../../images/save-icon-dark.svg);
+  transition: linear 0.3s;
+}
+.card__button_save:active {
+  background-image: url(../../images/save-icon-blue.svg);
 }

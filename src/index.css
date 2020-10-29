@@ -11,5 +11,6 @@
 @import url(components/Navigation/Navigation.css);
 @import url(components/Preloader/Preloader.css);
 @import url(components/SavedNews/SavedNews.css);
+@import url(components/SearchResult/SearchResult.css);
 @import url(components/SavedNewsHeader/SavedNewsHeader.css);
 @import url(components/About/About.css);

@@ -57,14 +57,18 @@
   box-sizing: content-box;
 }
 .header__auth-button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   color: white;
   border: 1px solid white;
   background: none;
   box-sizing: border-box;
   height: 48px;
-  width: 176px;
+  min-width: max-content;
   border-radius: 100px;
   cursor: pointer;
+  padding: 0 20px;
 }
 .header__auth-button:hover {
   opacity: 0.9;
@@ -73,6 +77,18 @@
 .header__auth-button:focus {
   outline: none;
 }
+.header__logout-button {
+  display: flex;
+  justify-self: end;
+  width: 24px;
+  height: 24px;
+}
+.header__auth-name {
+  display: flex;
+  color: white;
+  margin: 0 10px 0 auto;
+}
+/*black styles*/
 .header_black-version {
   color: black;
   background: white;
@@ -90,4 +106,7 @@
 .header__auth-button_black-version {
   color: black;
   border: 1px solid black;
+}
+.header__auth-name_black-version {
+  color: black;
 }

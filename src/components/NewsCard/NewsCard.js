@@ -2,7 +2,7 @@ import React from 'react';
 import cardImage from '../../images/card-image.jpg'
 
 function NewsCard() {
- 
+  let isCardSaved = false;
   return (
     <li className='card'>
       <img
@@ -15,7 +15,8 @@ function NewsCard() {
       <p className='card__text'>В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.</p>
       <p className='card__source'>Медуза</p>
       <p className='card__tag'>Природа</p>
-      <button className='card__button'></button>
+      <button className={'card__button' + (isCardSaved ? " card__button_delete" : " card__button_save")}>
+      </button>
       <p className='card__button-label'>Войдите, чтобы сохранять статьи</p>
     </li> 
   );
