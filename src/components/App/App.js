@@ -10,24 +10,14 @@ import PopupInfoTip from '../PopupInfoTip/PopupInfoTip';
 import './App.css';
 
 function App() {
-  const isLogin = true;
+  const isLogin = false;
   let pathname = useLocation().pathname;
   const [isHeaderBlack, setIsHeaderBlack] = useState();
   const [isPopupForLoginOpen, setIsPopupForLoginOpen] = useState(false);
   const [isPopupForSignupOpen, setIsPopupForSignupOpen] = useState(false);
   const [isPopupInfoTipOpen, setIsPopupInfoTipOpen] = useState(false);
-  function handlePopupForSignup() {
-    setIsPopupForSignupOpen(true)
-    setIsPopupForLoginOpen(false);
-  }
-  function handlePopupInfoTip() {
-    setIsPopupInfoTipOpen(true)
-  }
-  function handlePopupForLogin() {
-    setIsPopupForSignupOpen(false)
-    setIsPopupForLoginOpen(true)
-  }
-  function handleHeaderChange(pathname) {
+  const [isMobilePopupOpen, setIsMobilePopupOpen] = useState(false);
+    function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
       setIsHeaderBlack(true)
     } if (pathname === '/') {
@@ -38,9 +28,38 @@ function App() {
       setIsPopupForLoginOpen(false);
       setIsPopupForSignupOpen(false)
       setIsPopupInfoTipOpen(false);
+      setIsMobilePopupOpen(false);
+      document.removeEventListener('keydown', onEscClose)
+  }
+  function onEscClose(evt){
+    if(evt.key === 'Escape'){
+      handleCloseAllPopups();
+    }
+  }
+  function handlePopupForSignup() {
+    setIsPopupForSignupOpen(true);
+    setIsPopupForLoginOpen(false);
+    document.addEventListener('keydown', onEscClose);
+  }
+  function handlePopupInfoTip() {
+    setIsPopupInfoTipOpen(true);
+    document.addEventListener('keydown', onEscClose);
+  }
+  function handlePopupForLogin() {
+    setIsPopupForSignupOpen(false);
+    setIsPopupForLoginOpen(true);
+    document.addEventListener('keydown', onEscClose);
+  }
+  function handleMobilePopup() {
+    setIsMobilePopupOpen(true);
   }
   function logout(){
 
+  }
+  function handleOverlayClick(evt) {
+    if (evt.target.classList.contains('popup')) {
+      handleCloseAllPopups();
+    }
   }
   useEffect(() => {
     handleHeaderChange(pathname)
@@ -53,6 +72,8 @@ function App() {
        isHeaderBlack={isHeaderBlack}
        onPopupForSignup={handlePopupForSignup}
        onLogout={logout}
+       isMobilePopupOpen={isMobilePopupOpen}
+       onMobilePopupOpen={handleMobilePopup}
       />
       <Switch>
         <Route exact path="/">
@@ -62,22 +83,25 @@ function App() {
           <SavedNews />
         </Route>
       </Switch>
-      <Footer />
+      <Footer/>
       <PopupForLogin
       isOpen={isPopupForLoginOpen}
       onClose={handleCloseAllPopups}
       onPopupForSignup={handlePopupForSignup}
+      onOverlayClick={handleOverlayClick}
       />
       <PopupForSignup
       isOpen={isPopupForSignupOpen}
       onClose={handleCloseAllPopups}
       onPopupForLogin={handlePopupForLogin}
       onSubmit={handlePopupInfoTip}
+      onOverlayClick={handleOverlayClick}
       />
       <PopupInfoTip
       isOpen={isPopupInfoTipOpen}
       onClose={handleCloseAllPopups}
       onPopupForLogin={handlePopupForLogin}
+      onOverlayClick={handleOverlayClick}
       />
     </div>
   );

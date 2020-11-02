@@ -13,6 +13,7 @@ function PopupForSignup(props) {
       buttonLink="Войти"
       onButtonClick={props.onPopupForLogin}
       inputNameClass='popup__input-name-wrapper_active'
+      onOverlayClick={props.onOverlayClick}
     />
   );
 }

@@ -1,60 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logoutIconBlack from '../../images/logout-black.svg'
 import logoutIconWhite from '../../images/logout-white.svg'
 import { NavLink, Link } from 'react-router-dom';
 
 function Header(props) {
-  let name = 'Константин'
+  let name = 'Константин';
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  function menuOpen() {
+    setIsMenuOpen(true);
+  }
+  function menuClose() {
+    setIsMenuOpen(false);
+  }
+  function authButtonClick(){
+    menuClose();
+    props.onMobilePopupOpen();
+    props.onPopupForSignup();
+  }
   const logoutIcon = `${props.isHeaderBlack ? logoutIconBlack : logoutIconWhite}`;
   return (
-    <header className={ "header" + (props.isHeaderBlack ? " header_black-version" : "") }>
-      <Link
-       className={ "header__logo header__link" + (props.isHeaderBlack ? " header__link_black-version" : "") }
-       to='/'
-       >
-        NewsExplorer
-      </Link>
-      <nav className='header__nav'>
-        <NavLink
-         activeClassName={ (props.isHeaderBlack ? "header__link_active_black-version" : "header__link_active") }
-         className={ "header__main header__link" + (props.isHeaderBlack ? " header__link_black-version" : "") }
-         exact
+    <>
+      <div className={ "header__overlay" + (isMenuOpen ? " header__overlay_active" : "") }>
+      </div>
+      <header className={ "header" + (props.isHeaderBlack ? " header_black-version" : "") + (isMenuOpen ? " header_opened-menu" : "") }>
+        <Link
+         className={ "header__logo header__link" + (props.isHeaderBlack ? " header__link_black-version header__logo_black-version" : "") }
          to='/'
          >
-          Главная
-        </NavLink>
-        {props.isLogin &&
-        <NavLink
-         activeClassName={ (props.isHeaderBlack ? "header__link_active_black-version" : "header__link_active") }
-         className={ "header__saved-news header__link" + (props.isHeaderBlack ? " header__link_black-version" : "") }
-         to='/saved-news'>
-          Сохранённые статьи
-        </NavLink>}
-        {!props.isLogin && 
-        <button 
-        className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
-        onClick={props.onPopupForSignup}
-        >
-          Авторизоваться
+          NewsExplorer
+        </Link>
+        { isMenuOpen ? <button className={'header__menu-button' + (props.isHeaderBlack ? " header__menu-button_close_black-version" : " header__menu-button_close") } onClick={menuClose}>
+        </button>
+        :
+        <button className={'header__menu-button' + (props.isHeaderBlack ? " header__menu-button_open_black-version" : " header__menu-button_open") + (props.isMobilePopupOpen ? " header__menu-button_hidden" : "")}
+        onClick={menuOpen}>
         </button>
         }
-        {props.isLogin && 
-        <button 
-        className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
-        onClick={props.onLogout}
-        >
-         { props.isLogin && (
-         <>
-         <span className={"header__auth-name" + (props.isHeaderBlack ? " header__auth-name_black-version" : "") }>
-         {name}
-         </span> 
-         <img className="header__logout-button" alt="Выход" src={logoutIcon}/>
-         </>
-         ) }
-        </button>
-        }
-      </nav>
-    </header>
+        <nav className={'header__nav' + (isMenuOpen ? "" : " header__nav_hidden")}> 
+          <NavLink
+           activeClassName={ (props.isHeaderBlack ? "header__link_active_black-version" : "header__link_active") }
+           className={ "header__main header__link" + (props.isHeaderBlack ? " header__link_black-version" : "") }
+           exact
+           to='/'
+           >
+            Главная
+          </NavLink>
+          {props.isLogin &&
+          <NavLink
+           activeClassName={ (props.isHeaderBlack ? "header__link_active_black-version" : "header__link_active") }
+           className={ "header__saved-news header__link" + (props.isHeaderBlack ? " header__link_black-version" : "") }
+           to='/saved-news'>
+            Сохранённые статьи
+          </NavLink>}
+          {!props.isLogin && 
+          <button 
+          className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
+          onClick={authButtonClick}
+          >
+            Авторизоваться
+          </button>
+          }
+          {props.isLogin && 
+          <button 
+          className={ "header__auth-button" + (props.isHeaderBlack ? " header__auth-button_black-version" : "") }
+          onClick={props.onLogout}
+          >
+           { props.isLogin && (
+           <>
+           <span className={"header__auth-name" + (props.isHeaderBlack ? " header__auth-name_black-version" : "") }>
+           {name}
+           </span> 
+           <img className="header__logout-button" alt="Выход" src={logoutIcon}/>
+           </>
+           ) }
+          </button>
+          }
+        </nav>
+      </header>
+    </>
   )
 }
 

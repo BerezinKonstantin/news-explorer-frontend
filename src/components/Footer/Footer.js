@@ -10,18 +10,43 @@ function Footer() {
           &copy; 2020 Supersite, Powered by News API
       </p>
       <nav className='footer__nav'>
-        <div className='footer__link-wrapper'>
+        <div className='footer__nav-wrapper'>
           <Link className='footer__link' to='/'>
             Главная
           </Link>
-          <a className='footer__link' href='https://praktikum.yandex.ru' rel="noopener noreferrer" target='_blank'>
+          <a 
+          className='footer__link'
+          href='https://praktikum.yandex.ru'
+          rel="noopener noreferrer"
+          target='_blank'
+          >
             Яндекс Практикум
           </a>
-          <a className='footer__social-link' href='https://github.com' rel="noopener  noreferrer" target='_blank'>
-            <img className='footer__social-link-img' src={githubIcon} alt='Иконка GitHub'/>
+        </div>
+        <div className='footer__nav-wrapper'>
+          <a
+          className='footer__social-link'
+          href='https://github.com'
+          rel="noopener  noreferrer"
+          target='_blank'
+          >
+            <img
+            className='footer__social-link-img'
+            src={githubIcon}
+            alt='Иконка GitHub'
+            />
           </a>
-          <a className='footer__social-link' href='https://www.facebook.com' rel="noopener noreferrer" target='_blank'>
-            <img className='footer__social-link-img' src={fbIcon} alt='Иконка Facebook'/>
+          <a
+          className='footer__social-link'
+          href='https://www.facebook.com'
+          rel="noopener noreferrer"
+          target='_blank'
+          >
+            <img
+            className='footer__social-link-img'
+            src={fbIcon}
+            alt='Иконка Facebook'
+            />
           </a>
         </div>
       </nav>

@@ -4,7 +4,7 @@ import Preloader from '../Preloader/Preloader';
 import notFoundIcon from '../../images/not-found.svg';
 
 function SearchResult() {
-  let isSeachSuccess = false;
+  let isSeachSuccess = true;
   let isLoading = false;
   let isNotResult = false;
   return (

@@ -10,7 +10,7 @@ function PopupInfoTip(props) {
     props.onPopupForLogin()
   }
   return (
-    <section className={`popup popup_info-tip ${isOpen}`}>
+    <section className={`popup popup_info-tip ${isOpen}`} onClick={props.onOverlayClick}>
       <div className='popup__form popup__form-info-tip'>
         <button
           className='popup__close-button'

@@ -13,6 +13,7 @@ function PopupForLogin(props) {
       buttonLink="Зарегистрироваться"
       onButtonClick={props.onPopupForSignup}
       inputNameClass='popup__input-name-wrapper_hidden'
+      onOverlayClick={props.onOverlayClick}
     />    
   );
 }
