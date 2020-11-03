@@ -15,15 +15,16 @@ function SearchForm() {
           id='input-search'
           className='search-form__input'
           name='email'
-          autoComplete='off'
+          autoComplete='off' 
           // defaultValue={email}
           // onChange={handleChangeEmail}
           required
           placeholder='Введите тему новости'
         />
         <button
-         className='search-form__submit-button'
-         type='submit'>
+          className='search-form__submit-button'
+          type='submit'
+        >
           Искать
         </button>
       </form>

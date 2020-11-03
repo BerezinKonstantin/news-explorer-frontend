@@ -9,8 +9,12 @@ function PopupInfoTip(props) {
     props.onClose()
     props.onPopupForLogin()
   }
+
   return (
-    <section className={`popup popup_info-tip ${isOpen}`} onClick={props.onOverlayClick}>
+    <section
+      className={`popup popup_info-tip ${isOpen}`}
+      onClick={props.onOverlayClick}
+    >
       <div className='popup__form popup__form-info-tip'>
         <button
           className='popup__close-button'
@@ -18,7 +22,9 @@ function PopupInfoTip(props) {
           onClick={props.onClose}
         >
         </button>
-        <h2 className='popup__title'>Пользователь успешно зарегистрирован!</h2>
+        <h2 className='popup__title'>
+          Пользователь успешно зарегистрирован!
+        </h2>
         <button
           className="popup__link-button-info-tip"
           type='button'

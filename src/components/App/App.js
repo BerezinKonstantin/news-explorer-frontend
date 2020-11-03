@@ -68,12 +68,12 @@ function App() {
   return (
     <div className='app'>
       <Header
-       isLogin={isLogin}
-       isHeaderBlack={isHeaderBlack}
-       onPopupForSignup={handlePopupForSignup}
-       onLogout={logout}
-       isMobilePopupOpen={isMobilePopupOpen}
-       onMobilePopupOpen={handleMobilePopup}
+        isLogin={isLogin}
+        isHeaderBlack={isHeaderBlack}
+        onPopupForSignup={handlePopupForSignup}
+        onLogout={logout}
+        isMobilePopupOpen={isMobilePopupOpen}
+        onMobilePopupOpen={handleMobilePopup}
       />
       <Switch>
         <Route exact path="/">
@@ -85,23 +85,23 @@ function App() {
       </Switch>
       <Footer/>
       <PopupForLogin
-      isOpen={isPopupForLoginOpen}
-      onClose={handleCloseAllPopups}
-      onPopupForSignup={handlePopupForSignup}
-      onOverlayClick={handleOverlayClick}
+        isOpen={isPopupForLoginOpen}
+        onClose={handleCloseAllPopups}
+        onPopupForSignup={handlePopupForSignup}
+        onOverlayClick={handleOverlayClick}
       />
       <PopupForSignup
-      isOpen={isPopupForSignupOpen}
-      onClose={handleCloseAllPopups}
-      onPopupForLogin={handlePopupForLogin}
-      onSubmit={handlePopupInfoTip}
-      onOverlayClick={handleOverlayClick}
+        isOpen={isPopupForSignupOpen}
+        onClose={handleCloseAllPopups}
+        onPopupForLogin={handlePopupForLogin}
+        onSubmit={handlePopupInfoTip}
+        onOverlayClick={handleOverlayClick}
       />
       <PopupInfoTip
-      isOpen={isPopupInfoTipOpen}
-      onClose={handleCloseAllPopups}
-      onPopupForLogin={handlePopupForLogin}
-      onOverlayClick={handleOverlayClick}
+        isOpen={isPopupInfoTipOpen}
+        onClose={handleCloseAllPopups}
+        onPopupForLogin={handlePopupForLogin}
+        onOverlayClick={handleOverlayClick}
       />
     </div>
   );

@@ -7,7 +7,6 @@ function PopupWithForm(props) {
 
   function handleChangeEmail(ev) {
     setEmail(ev.target.value);
-    
   } 
   function handleChangePassword(ev) {
     setPassword(ev.target.value);
@@ -21,7 +20,10 @@ function PopupWithForm(props) {
   }
       
   return (
-    <section className={`popup popup_for_${props.name} ${isOpen}`} onClick={props.onOverlayClick}>
+    <section
+      className={`popup popup_for_${props.name} ${isOpen}`}
+      onClick={props.onOverlayClick}
+    >
       <form
         id={`form_for_${props.name}`}
         className='popup__form'
@@ -33,8 +35,11 @@ function PopupWithForm(props) {
           className='popup__close-button'
           type='button'
           onClick={props.onClose}
-        ></button>
-        <h2 className='popup__title'>{props.title}</h2>
+        >
+        </button>
+        <h2 className='popup__title'>
+          {props.title}
+        </h2>
         <fieldset className='popup__fieldset'>
           <span className='popup__input-label'>
             Email
@@ -51,8 +56,10 @@ function PopupWithForm(props) {
             placeholder='Введите почту'
             pattern='^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'
           />
-          <span id={`input-email-${props.inputId}-error`}
-            className='popup__input-error-text'>
+          <span
+            id={`input-email-${props.inputId}-error`}
+            className='popup__input-error-text'
+          >
             Неправильный формат email
           </span>
           <span className='popup__input-label'>
@@ -72,8 +79,10 @@ function PopupWithForm(props) {
             maxLength='32'
             minLength='8'
           />
-          <span id={`input-password-${props.inputId}-error`} 
-            className='popup__input-error-text'>
+          <span
+            id={`input-password-${props.inputId}-error`} 
+            className='popup__input-error-text'
+          >
             Неправильный пароль
           </span>
           <div className={props.inputNameClass}>
@@ -93,13 +102,16 @@ function PopupWithForm(props) {
               maxLength='20'
               minLength='2'
             />
-            <span id={`input-name-${props.inputId}-error`}
-              className='popup__input-error-text'>
+            <span 
+              id={`input-name-${props.inputId}-error`}
+              className='popup__input-error-text'
+            >
               Имя - обязательное поле!
             </span>
           </div>
           <span
-            className='popup__input-error-text popup__auth-error-text'>
+            className='popup__input-error-text popup__auth-error-text'
+          >
             Имя - обязательное поле!
           </span>
         </fieldset>
@@ -111,7 +123,9 @@ function PopupWithForm(props) {
           {props.buttonName}
         </button>
         <div className='popup__link-wrapper'>
-          <span>или</span>
+          <span>
+            или
+          </span>
           <button
           className="popup__link-button"
           type='button'
