@@ -7,7 +7,8 @@ function PopupWithForm(props) {
 
   function handleChangeEmail(ev) {
     setEmail(ev.target.value);
-  }
+    
+  } 
   function handleChangePassword(ev) {
     setPassword(ev.target.value);
   }
@@ -97,7 +98,7 @@ function PopupWithForm(props) {
               Имя - обязательное поле!
             </span>
           </div>
-          <span id={`auth-error`}
+          <span
             className='popup__input-error-text popup__auth-error-text'>
             Имя - обязательное поле!
           </span>
