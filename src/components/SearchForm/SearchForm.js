@@ -1,6 +1,11 @@
 import React from 'react';
 
-function SearchForm() {
+function SearchForm(props) {
+  const searchInput = React.useRef();
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    props.onGetArticles(searchInput.current.value);
+  }
   return ( 
     <div className='search-form'>
      <h1 className='search-form__title'>
@@ -9,15 +14,18 @@ function SearchForm() {
       <p className='search-form__subtitle'>
         Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.
       </p>
-      <form className='search-form__form'>
+      <form
+        className='search-form__form'
+        onSubmit={handleSubmit}
+        noValidate
+      >
         <input
           type ='text'
           id='input-search'
           className='search-form__input'
           name='email'
           autoComplete='off' 
-          // defaultValue={email}
-          // onChange={handleChangeEmail}
+          ref={searchInput}
           required
           placeholder='Введите тему новости'
         />

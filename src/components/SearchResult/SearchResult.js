@@ -39,13 +39,19 @@ function SearchResult() {
         }
         { isNotResult &&
           (
-           <>
-             <img className="search-result__img_not-result" src={notFoundIcon} alt='Ничего не найдено'/>
-             <h2 className="search-result__title_not-result">Ничего не найдено</h2>
-             <p className="search-result__subtitle_not-result">
-               К сожалению, по вашему запросу ничего не найдено.
-             </p>
-           </>
+            <>
+              <img
+                 className="search-result__img_not-result"
+                 src={notFoundIcon}
+                 alt='Ничего не найдено'
+              />
+              <h2 className="search-result__title_not-result">
+                Ничего не найдено
+              </h2>
+              <p className="search-result__subtitle_not-result">
+                К сожалению, по вашему запросу ничего не найдено.
+              </p>
+            </>
           )
         }
         </div>

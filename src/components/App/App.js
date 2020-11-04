@@ -7,9 +7,11 @@ import SavedNews from '../SavedNews/SavedNews';
 import PopupForLogin from '../PopupForLogin/PopupForLogin';
 import PopupForSignup from '../PopupForSignup/PopupForSignup';
 import PopupInfoTip from '../PopupInfoTip/PopupInfoTip';
+import NewsApi from "../../utils/NewsApi";
 import './App.css';
 
 function App() {
+  const newsApi = new NewsApi();
   const isLogin = false;
   let pathname = useLocation().pathname;
   const [isHeaderBlack, setIsHeaderBlack] = useState();
@@ -17,7 +19,7 @@ function App() {
   const [isPopupForSignupOpen, setIsPopupForSignupOpen] = useState(false);
   const [isPopupInfoTipOpen, setIsPopupInfoTipOpen] = useState(false);
   const [isMobilePopupOpen, setIsMobilePopupOpen] = useState(false);
-    function handleHeaderChange(pathname) {
+  function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
       setIsHeaderBlack(true)
     } if (pathname === '/') {
@@ -61,6 +63,15 @@ function App() {
       handleCloseAllPopups();
     }
   }
+  function getArticles(keyword){
+    newsApi.getArticles(keyword)
+    .then((result) =>{
+      console.log(result);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }
   useEffect(() => {
     handleHeaderChange(pathname)
   }, [pathname]);
@@ -77,7 +88,9 @@ function App() {
       />
       <Switch>
         <Route exact path="/">
-          <Main />
+          <Main
+            onGetArticles={getArticles}
+          />
         </Route>
         <Route path="/saved-news">
           <SavedNews />

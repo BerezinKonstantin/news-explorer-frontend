@@ -3,10 +3,12 @@ import About from '../About/About';
 import SearchForm from '../SearchForm/SearchForm';
 import SearchResult from '../SearchResult/SearchResult';
 
-function Main() {
+function Main(props) {
   return (
     <main className='main'>
-      <SearchForm/>
+      <SearchForm
+        onGetArticles={props.onGetArticles}
+      />
       <SearchResult/> 
       <About/>
     </main>
