@@ -1,0 +1,265 @@
+.header {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  height: 80px;
+  color: white;
+  align-content: center;
+  align-items: center;
+  background: rgba(196, 196, 196, 0.01);
+  box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  position: fixed;
+  z-index: 1;
+}
+.header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  margin: 0 104px 0 0;
+  overflow: hidden;
+  max-height: none;
+}
+.header__link {
+  color: white;
+  text-decoration: none;
+}
+.header__link_active {
+  border: white solid;
+  border-width: 0 0 3px 0;
+}
+.header__logo {
+  display: flex;
+  height: 24px;
+  width: 200px;
+  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  text-align: left;
+  margin: auto auto auto 104px;
+}
+.header__main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: 0 34px 0 0;
+  box-sizing: border-box;
+}
+.header__saved-news {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  height: 100%;
+  margin: 0 34px 0 0;
+  box-sizing: border-box;
+}
+.header__auth-button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  border: 1px solid white;
+  background: none;
+  box-sizing: border-box;
+  height: 48px;
+  min-width: max-content;
+  border-radius: 100px;
+  cursor: pointer;
+  padding: 0 20px;
+}
+.header__auth-button:hover {
+  opacity: 0.9;
+  transition: linear 0.3s;
+}
+.header__auth-button:focus {
+  outline: none;
+}
+.header__logout-button {
+  display: flex;
+  justify-self: end;
+  width: 24px;
+  height: 24px;
+}
+.header__auth-name {
+  display: flex;
+  color: white;
+  margin: 0 10px 0 auto;
+}
+.header__overlay {
+  display: none;
+  width: 100%;
+  min-height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: visibility 0s, opacity 0s;
+  opacity: 1;
+}
+.header__overlay_active {
+  display: block;
+  z-index: 1;
+}
+.header__menu-button {
+  background: inherit;
+  border: none;
+  padding: 0;
+  margin: 0;
+  visibility: hidden;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.header__menu-button_open {
+  background-image: url(../../images/menu-white.svg);
+}
+.header__menu-button_close {
+  background-image: url(../../images/menu-close-white.svg);
+}
+/*black styles*/
+.header_black-version {
+  color: black;
+  background: white;
+  box-shadow: inset 0px -1px 0px #d1d2d6;
+}
+.header__link_black-version {
+  background: none;
+  color: black;
+  text-decoration: none;
+}
+.header__link_active_black-version {
+  border: black solid;
+  border-width: 0 0 3px 0;
+}
+.header__auth-button_black-version {
+  color: black;
+  border: 1px solid black;
+}
+.header__auth-name_black-version {
+  color: black;
+}
+.header__menu-button_open_black-version {
+  background: white;
+  background-image: url(../../images/menu-black.svg);
+}
+.header__menu-button_close_black-version {
+  background: white;
+  background-image: url(../../images/menu-close-black.svg);
+}
+.header__menu-button_hidden {
+  display: none;
+}
+/*Tablet version*/
+@media (max-width: 1027px) {
+  .header {
+    font-size: 16px;
+    height: 66px;
+  }
+  .header__nav {
+    margin: 0 40px 0 0;
+  }
+  .header__logo {
+    margin: auto auto auto 40px;
+  }
+  .header__main {
+    margin: 0 16px 0 0;
+  }
+  .header__saved-news {
+    margin: 0 16px 0 0;
+  }
+  .header__auth-button {
+    height: 40px;
+    padding: 0 15px;
+  }
+}
+/*Mobile version*/
+@media (max-width: 650px) {
+  .header {
+    display: block;
+    height: max-content;
+    box-shadow: none;
+  }
+  .header_opened-menu {
+    background: #1a1b22;
+    border-radius: 0 0 16px 16px;
+  }
+  .header__nav {
+    display: block;
+    height: max-content;
+    margin: 0;
+  }
+  .header__nav_hidden {
+    display: none;
+  }
+  .header__logo {
+    display: block;
+    font-size: 16px;
+    margin: 0 auto;
+    box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+    height: 56px;
+    width: 90%;
+  }
+  .header__link {
+    size: 18px;
+    line-height: 56px;
+    height: max-content;
+    margin: 0 auto;
+    width: 90%;
+  }
+  .header__link_active {
+    border: none;
+    font-weight: 700;
+  }
+  .header__auth-button {
+    justify-content: center;
+    height: 56px;
+    width: 90%;
+
+    min-width: max-content;
+    margin: 0 auto 24px;
+  }
+  .header__auth-name {
+    font-size: 18px;
+    margin: 0;
+  }
+  .header__logout-button {
+    justify-self: start;
+    width: 24px;
+    height: 24px;
+  }
+  .header__menu-button {
+    visibility: visible;
+  }
+  /*black styles*/
+  .header__logo_black-version {
+    box-shadow: inset 0px -1px 0px #d1d2d6;
+  }
+  .header_black-version {
+    color: black;
+    background: white;
+  }
+  .header__link_black-version {
+    background: none;
+    color: black;
+    text-decoration: none;
+  }
+  .header__link_active_black-version {
+    border: none;
+  }
+  .header__auth-button_black-version {
+    color: black;
+    border: 1px solid black;
+  }
+  .header__auth-name_black-version {
+    color: black;
+  }
+}
