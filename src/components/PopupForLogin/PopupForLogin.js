@@ -14,6 +14,7 @@ function PopupForLogin(props) {
       onButtonClick={props.onPopupForSignup}
       inputNameClass='popup__input-name-wrapper_hidden'
       onOverlayClick={props.onOverlayClick}
+      onSubmit={props.onSubmit}
     />    
   );
 }

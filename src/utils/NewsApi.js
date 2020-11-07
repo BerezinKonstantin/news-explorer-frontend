@@ -1,8 +1,13 @@
-import { apiKey, basedUrl, initialDate, currentDate } from "./constants";
+import { apiKey, basedUrlNewsApi as basedUrl } from "./constants";
 
 export default class Api {
   constructor() {
-    this._apiKey = apiKey;
+    this._currentDate = new Date();
+    this._initialDate = new Date();
+    this._initialDate.setDate(this._initialDate.getDate()-7);
+    this._formatDate = (date) => {
+    return (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())
+    }
   }
   _fetch(url, params) {
     return fetch(url, params).then((result) => {
@@ -13,10 +18,10 @@ export default class Api {
     });
   }
   getArticles(keyword) {
-    return this._fetch(`${basedUrl}q=${keyword}&from=${initialDate}&to=${currentDate}&sortBy=publishedAt&pageSize=100`, {
+    return this._fetch(`${basedUrl}q=${keyword}&from=${this._formatDate(this._initialDate)}&to=${this._formatDate(this._currentDate)}&sortBy=publishedAt&pageSize=100`, {
       method: "GET",
       headers: {
-        'x-api-key': this._apiKey,
+        'x-api-key': apiKey,
       },
     });
   }

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import logoutIconBlack from '../../images/logout-black.svg'
 import logoutIconWhite from '../../images/logout-white.svg'
 import { NavLink, Link } from 'react-router-dom';
 
 function Header(props) {
-  let name = 'Константин';
+  const currentUser = useContext(CurrentUserContext);
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   function menuOpen() {
     setIsMenuOpen(true);
@@ -82,7 +84,7 @@ function Header(props) {
                 props.isLogin && 
                 (<>
                   <span className={"header__auth-name" + (props.isHeaderBlack ? " header__auth-name_black-version" : "") }>
-                    {name}
+                    {currentUser.name}
                   </span> 
                   <img
                     className="header__logout-button"

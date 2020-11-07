@@ -1,34 +1,40 @@
-import React, { useState }from 'react';
-import cardImage from '../../images/card-image.jpg'
-
-function NewsCard() {
+import React, { useState } from 'react';
+import imgFailure from '../../images/img-failure.png'
+function NewsCard(props) {
   const [isButtonClick, setIsButtonClick] = useState(false);
   let isCardSaved = false;
   function handleButtonClick(){
     setIsButtonClick(true)
   }
-  
+  const imgSource = props.card.urlToImage ? props.card.urlToImage : imgFailure;
   return (
     <li className='card'>
+      <a 
+      className='card_link'
+      href={props.card.url}
+      rel="noopener noreferrer"
+      target='_blank'
+      >
       <img
         className='card__picture'
-        src={cardImage}
-        alt="Изображение карточки"
+        src={imgSource}
+        alt={props.card.title}
       />
       <p className='card__date'>
-        2 августа, 2019
+        {props.card.publishedAt}
       </p>
       <h2 className='card__title'>
-        Лесные огоньки: история одной фотографии
+        {props.card.title}
       </h2>
       <p className='card__text'>
-        В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складываться система национальных парков – охраняемых территорий, где и сегодня каждый может приобщиться к природе.
+        {props.card.description}
       </p>
       <p className='card__source'>
-        Медуза
+        {props.card.source.name}
       </p>
+      </a>
       <p className='card__tag'>
-        Природа
+        {props.keyword}
       </p>
       <button
         className={'card__button' + (isCardSaved ? " card__button_delete" : " card__button_save")}
@@ -39,7 +45,8 @@ function NewsCard() {
       isButtonClick && 
       <p className='card__button-label'>
         Войдите, чтобы сохранять статьи
-      </p>}
+      </p>
+      }
     </li> 
   );
 }

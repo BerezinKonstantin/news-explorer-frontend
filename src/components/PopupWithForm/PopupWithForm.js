@@ -18,7 +18,10 @@ function PopupWithForm(props) {
   if (props.isOpen) {
     isOpen = 'popup_opened';
   }
-      
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    props.onSubmit({ email, password, name });
+  }    
   return (
     <section
       className={`popup popup_for_${props.name} ${isOpen}`}
@@ -30,6 +33,7 @@ function PopupWithForm(props) {
         action='#'
         method='POST'
         noValidate 
+        onSubmit={handleSubmit}
       >
         <button
           className='popup__close-button'
@@ -119,6 +123,7 @@ function PopupWithForm(props) {
           className='popup__submit-button'
           type='submit'
           defaultValue={props.buttonName}
+          
         >
           {props.buttonName}
         </button>
