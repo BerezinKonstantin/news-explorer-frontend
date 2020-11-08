@@ -138,7 +138,7 @@
   background-image: url(../../images/save-icon-dark.svg);
   transition: linear 0.3s;
 }
-.card__button_save:active {
+.card__button_save_active {
   background-image: url(../../images/save-icon-blue.svg);
 }
 @media (max-width: 1276px) {

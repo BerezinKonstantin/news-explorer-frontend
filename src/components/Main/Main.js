@@ -16,6 +16,8 @@ function Main(props) {
         isSearchCompleted={props.isSearchCompleted}
         keyword={props.keyword}
         onSaveArticle={props.onSaveArticle}
+        onDeleteArticle={props.onDeleteArticle}
+        isRenderLoading={props.isRenderLoading}
       /> 
       <About/>
     </main>

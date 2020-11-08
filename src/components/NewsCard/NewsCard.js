@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function NewsCard(props) {
+  const [isCardSaved, setIsCardSaved] = useState(false)
   let isButtonClick = false;
   const location = useLocation();
   const cardText = `${location.pathname === '/' ? props.card.description : props.card.text}`;
@@ -21,11 +22,13 @@ function NewsCard(props) {
         source: props.card.source.name,
         image: props.card.urlToImage,
       }
-      props.onSaveArticle(data)
+      props.onSaveArticle(data);
+      setIsCardSaved(true);
     }
   }
   function handleDeleteArticle(){
     props.onDeleteArticle(props.card._id)
+    setIsCardSaved(false)
   }
   return (
     <li className='card'>
@@ -56,11 +59,13 @@ function NewsCard(props) {
       <p className='card__tag'>
         {keyword}
       </p>
-      {location.pathname === '/' ? <button
-        className={'card__button card__button_save'}
-        onClick={handleSaveArticle}
-      >
-      </button> :
+      {location.pathname === '/' ? 
+        <button
+          className={'card__button card__button_save' + (isCardSaved ? " card__button_save_active" : "")}
+          onClick={handleSaveArticle}
+        >
+        </button>
+         :
       <button
         className={'card__button card__button_delete'}
         onClick={handleDeleteArticle}

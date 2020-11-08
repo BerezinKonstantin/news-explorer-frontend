@@ -4,7 +4,7 @@ import Preloader from '../Preloader/Preloader';
 import notFoundIcon from '../../images/not-found.svg';
 
 function SearchResult(props) {
-  let isLoading = false;
+  
   
   let [cardsNumber, setCardsNumber] = useState(3);
   const cards = props.searchResult.slice(0, 0+cardsNumber);
@@ -18,7 +18,7 @@ function SearchResult(props) {
   return (
     <>
     {
-      (isSearchSuccess || isLoading || isNotResult) &&
+      (isSearchSuccess || props.isRenderLoading || isNotResult) &&
       (
         <div className="search-result">
         { isSearchSuccess && 
@@ -31,6 +31,7 @@ function SearchResult(props) {
                 cards={cards}
                 keyword={props.keyword}
                 onSaveArticle={props.onSaveArticle}
+                onDeleteArticle={props.onDeleteArticle}
               />
               { (cards.length < props.searchResult.length ) &&
                 (<button
@@ -44,7 +45,7 @@ function SearchResult(props) {
             </>
           )
         } 
-        { isLoading && 
+        { props.isRenderLoading && 
           <>
             <Preloader />
             <p className="search-result__subtitle_not-result">

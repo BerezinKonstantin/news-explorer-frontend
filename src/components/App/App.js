@@ -35,6 +35,7 @@ function App() {
   // const [savedKeywords, setSavedKeywords] = React.useState([]);
   const [isSearchCompleted, setIsSearchCompleted] = React.useState(false);
   const [currentKeyword, setCurrentKeyword] = useState();
+  const [isRenderLoading, setIsRenderLoading] = useState(false)
  
   function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
@@ -42,6 +43,12 @@ function App() {
     } if (pathname === '/') {
       setIsHeaderBlack(false)
     };
+  }
+  function handleRenderLoading(){
+    if (!isRenderLoading){
+      setIsRenderLoading(true);
+    } 
+    setIsRenderLoading(false);
   }
   function handleCloseAllPopups() {
       setIsPopupForLoginOpen(false);
@@ -81,6 +88,7 @@ function App() {
     }
   }
   function getSearchResult(keyword) {
+    setIsRenderLoading(true);
     newsApi.getArticles(keyword)
     .then((result) =>{
       setSearchResult(result.articles);
@@ -89,6 +97,9 @@ function App() {
     })
     .catch((error) => {
         console.error(error);
+    })
+    .finally(()=>{
+      setIsRenderLoading(false)
     });
   }
   function getSavedArticles() {
@@ -208,10 +219,12 @@ function App() {
         <Route exact path="/">
           <Main
             onSaveArticle={saveArticle}
+            onDeleteArticle={deleteArticle}
             onGetArticles={getSearchResult}
             searchResult={searchResult}
             isSearchCompleted={isSearchCompleted}
             keyword={currentKeyword}
+            isRenderLoading={isRenderLoading}
           />
         </Route>
         <ProtectedRoute
