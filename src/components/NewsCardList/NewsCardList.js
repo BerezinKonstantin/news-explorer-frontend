@@ -10,7 +10,7 @@ function NewsCardList(props) {
             key={i}
             keyword={props.keyword}
             onSaveArticle={props.onSaveArticle}
-           /*onCardDelete={props.onCardDelete}*/
+            onDeleteArticle={props.onDeleteArticle}
           />
         ))}
     </ul> 

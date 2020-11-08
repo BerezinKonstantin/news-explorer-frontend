@@ -15,6 +15,7 @@ console.log(props.savedArticles);
       />
       <NewsCardList
         cards={props.savedArticles}
+        onDeleteArticle={props.onDeleteArticle}
       />
     </main> 
   );

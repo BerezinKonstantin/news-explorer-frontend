@@ -1,9 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-// import imgFailure from '../../images/img-failure.png'
+
 function NewsCard(props) {
   let isButtonClick = false;
-  let isCardSaved = false;
   const location = useLocation();
   const cardText = `${location.pathname === '/' ? props.card.description : props.card.text}`;
   const cardLink = `${location.pathname === '/' ? props.card.url : props.card.link}`;
@@ -11,7 +10,7 @@ function NewsCard(props) {
   const keyword = `${location.pathname === '/' ? props.keyword : props.card.keyword}`;
   const cardDate = `${location.pathname === '/' ? props.card.publishedAt : props.card.date}`;
   const cardSource = `${location.pathname === '/' ? props.card.source.name : props.card.source}`;
-  function handleButtonClick(){
+  function handleSaveArticle(){
     if (location.pathname === '/'){
       const data = {
         link: props.card.url,
@@ -25,7 +24,9 @@ function NewsCard(props) {
       props.onSaveArticle(data)
     }
   }
-  
+  function handleDeleteArticle(){
+    props.onDeleteArticle(props.card._id)
+  }
   return (
     <li className='card'>
       <a 
@@ -55,17 +56,20 @@ function NewsCard(props) {
       <p className='card__tag'>
         {keyword}
       </p>
-      <button
-        className={'card__button' + (isCardSaved ? " card__button_delete" : " card__button_save")}
-        onClick={handleButtonClick}
+      {location.pathname === '/' ? <button
+        className={'card__button card__button_save'}
+        onClick={handleSaveArticle}
       >
-      </button>
-      {
-      isButtonClick && 
+      </button> :
+      <button
+        className={'card__button card__button_delete'}
+        onClick={handleDeleteArticle}
+      >
+      </button>}
+      {isButtonClick && 
       <p className='card__button-label'>
         Войдите, чтобы сохранять статьи
-      </p>
-      }
+      </p>}
     </li> 
   );
 }

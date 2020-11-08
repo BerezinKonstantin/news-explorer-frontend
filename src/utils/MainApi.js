@@ -100,3 +100,20 @@ export const saveArticle = (token, data) => {
       return res;
     });
 };
+
+export const deleteArticle = (token, cardId) => {
+  return fetch(`${basedUrl}/articles/${cardId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((res) => {
+      return res;
+    });
+};

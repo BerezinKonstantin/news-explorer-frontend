@@ -14,6 +14,7 @@ import {
   checkToken as checkTokenApi,
   saveArticle as saveArticleApi,
   getArticles as getArticlesApi,
+  deleteArticle as deleteArticleApi,
 } from '../../utils/MainApi';
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -103,7 +104,19 @@ function App() {
   function saveArticle(data){
     const token = localStorage.getItem('token');
     saveArticleApi(token, data)
-    
+    .catch((error) => {
+        console.error(error);
+    });
+  }
+  function deleteArticle(cardId){
+    const token = localStorage.getItem('token');
+    deleteArticleApi(token, cardId)
+    .then(()=>{
+      getSavedArticles()
+    })
+    .catch((error) => {
+        console.error(error);
+    });
   }
   function onLogin({ email, password }) {
     loginApi({ email, password })
@@ -208,6 +221,7 @@ function App() {
           onPopupForSignup={handlePopupForSignup}
           savedArticles={savedArticles}
           getSavedArticles={getSavedArticles}
+          onDeleteArticle={deleteArticle}
         />
       </Switch>
       <Footer/>
