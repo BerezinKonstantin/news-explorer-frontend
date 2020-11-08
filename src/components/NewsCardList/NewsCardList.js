@@ -9,9 +9,8 @@ function NewsCardList(props) {
             card={card}
             key={i}
             keyword={props.keyword}
-            /*onCardClick={props.onCardClick}
-            onCardLike={props.onCardLike}
-            onCardDelete={props.onCardDelete}*/
+            onSaveArticle={props.onSaveArticle}
+           /*onCardDelete={props.onCardDelete}*/
           />
         ))}
     </ul> 

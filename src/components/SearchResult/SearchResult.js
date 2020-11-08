@@ -30,6 +30,7 @@ function SearchResult(props) {
               <NewsCardList
                 cards={cards}
                 keyword={props.keyword}
+                onSaveArticle={props.onSaveArticle}
               />
               { (cards.length < props.searchResult.length ) &&
                 (<button

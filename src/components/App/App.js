@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Route, Switch, useHistory } from 'react-router-dom';
+import { useLocation, Route, Switch } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -8,7 +8,13 @@ import PopupForLogin from '../PopupForLogin/PopupForLogin';
 import PopupForSignup from '../PopupForSignup/PopupForSignup';
 import PopupInfoTip from '../PopupInfoTip/PopupInfoTip';
 import NewsApi from "../../utils/NewsApi";
-import { signup, login, getCheckToken } from '../../utils/MainApi';
+import {
+  signup as signupApi,
+  login as loginApi,
+  checkToken as checkTokenApi,
+  saveArticle as saveArticleApi,
+  getArticles as getArticlesApi,
+} from '../../utils/MainApi';
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './App.css';
@@ -24,9 +30,11 @@ function App() {
   const [isPopupInfoTipOpen, setIsPopupInfoTipOpen] = useState(false);
   const [isMobilePopupOpen, setIsMobilePopupOpen] = useState(false);
   const [searchResult, setSearchResult] = React.useState([]);
+  const [savedArticles, setSavedArticles] = React.useState([]);
+  // const [savedKeywords, setSavedKeywords] = React.useState([]);
   const [isSearchCompleted, setIsSearchCompleted] = React.useState(false);
   const [currentKeyword, setCurrentKeyword] = useState();
-  const history = useHistory();
+ 
   function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
       setIsHeaderBlack(true)
@@ -71,7 +79,7 @@ function App() {
       handleCloseAllPopups();
     }
   }
-  function getArticles(keyword) {
+  function getSearchResult(keyword) {
     newsApi.getArticles(keyword)
     .then((result) =>{
       setSearchResult(result.articles);
@@ -82,24 +90,40 @@ function App() {
         console.error(error);
     });
   }
+  function getSavedArticles() {
+    const token = localStorage.getItem('token');
+    getArticlesApi(token)
+    .then((result) =>{
+      setSavedArticles(result);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }
+  function saveArticle(data){
+    const token = localStorage.getItem('token');
+    saveArticleApi(token, data)
+    
+  }
   function onLogin({ email, password }) {
-    login({ email, password })
-      .then((res) => {
-        if (res.token) {
+    loginApi({ email, password })
+        .then((res) => {
+          console.log(res);
+          if (res.token) {
           localStorage.setItem('token', res.token);
           setCurrentUser(
             {
-              email: res.data.email,
-              name: res.data.name,
+              email: res.email,
+              name: res.name,
+              _id: res._id
             }
           );
           setIsLogin(true);
-          history.push('/');
+          }
           //setInfoText('Вход выполнен!');
-        }
-        if (res.message) {
-          //setInfoText(`Что-то пошло не так! Попробуйте ещё раз. ${res.message}`);
-        }
+        })
+      .then(() => {
+        handleCloseAllPopups() ;
       })
       .then(() => {
         handlePopupInfoTip();
@@ -108,10 +132,9 @@ function App() {
   }
   // Регистрация пользователя
   function onSignup({ password, email, name }) {
-    signup({ password, email, name })
+    signupApi({ password, email, name })
       .then((res) => {
         if (res.data) {
-          history.push('/');
           //setInfoText('Вы успешно зарегистрировались!');
         }
         if (res.error) {
@@ -120,6 +143,9 @@ function App() {
         if (res.message) {
           //setInfoText(`Что-то пошло не так! Попробуйте ещё раз. ${res.message}`);
         }
+      })
+      .then(() => {
+        handleCloseAllPopups() ;
       })
       .then(() => {
         handlePopupInfoTip();
@@ -131,24 +157,25 @@ function App() {
   function checkToken() {
     const token = localStorage.getItem('token');
     if (token) {
-      getCheckToken(token).then((res) => {
+      checkTokenApi(token).then((res) => {
         if (res) {
           setCurrentUser(
             {
-              email: res.data.email,
-              name: res.data.name,
-            }
-          );
+              email: res.email,
+              name: res.name,
+              _id: res._id
+            });
           setIsLogin(true);
-          history.push('/');
         }
       });
     }
   }
+
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
+  
   useEffect(() => {
     handleHeaderChange(pathname)
   }, [pathname]);
@@ -167,7 +194,8 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Main
-            onGetArticles={getArticles}
+            onSaveArticle={saveArticle}
+            onGetArticles={getSearchResult}
             searchResult={searchResult}
             isSearchCompleted={isSearchCompleted}
             keyword={currentKeyword}
@@ -178,6 +206,8 @@ function App() {
           component={SavedNews}
           isLogin={isLogin}
           onPopupForSignup={handlePopupForSignup}
+          savedArticles={savedArticles}
+          getSavedArticles={getSavedArticles}
         />
       </Switch>
       <Footer/>

@@ -41,7 +41,24 @@ export const login = ({ password, email }) => {
     });
 };
 
-export const getCheckToken = (token) => {
+export const getArticles = (token) => {
+  return fetch(`${basedUrl}/articles`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((res) => {
+      return res;
+    });
+};
+
+export const checkToken = (token) => {
   return fetch(`${basedUrl}/users/me`, {
     method: 'GET',
     headers: {
@@ -50,20 +67,36 @@ export const getCheckToken = (token) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => {
-      try {
-        if (res.status === 200) {
-          return res.json();
-        }
-        if (res.status === 400) {
-          throw new Error('Токен не передан или передан не в том формате');
-        }
-        if (res.status === 401) {
-          throw new Error('Переданный токен некорректен');
-        }
-      } catch (err) {
-        return err;
-      }
+    .then((response) => {
+      return response.json();
     })
-    .then((res) => res);
+    .then((res) => {
+      return res;
+    });
+};
+
+export const saveArticle = (token, data) => {
+  return fetch(`${basedUrl}/articles`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      keyword: data.keyword,
+      title: data.title,
+      text: data.text,
+      date: data.date,
+      source: data.source,
+      image: data.image,
+      link: data.link,
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((res) => {
+      return res;
+    });
 };
