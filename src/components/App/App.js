@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Route, Switch } from 'react-router-dom';
+import { useLocation, useHistory, Route, Switch } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -21,21 +21,22 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './App.css';
 
 function App() {
+  const history = useHistory();
   const newsApi = new NewsApi();
+  const pathname = useLocation().pathname;
   const [isLogin, setIsLogin] = useState(false);
-  let pathname = useLocation().pathname;
   const [currentUser, setCurrentUser] = useState({});
   const [isHeaderBlack, setIsHeaderBlack] = useState();
   const [isPopupForLoginOpen, setIsPopupForLoginOpen] = useState(false);
   const [isPopupForSignupOpen, setIsPopupForSignupOpen] = useState(false);
   const [isPopupInfoTipOpen, setIsPopupInfoTipOpen] = useState(false);
   const [isMobilePopupOpen, setIsMobilePopupOpen] = useState(false);
-  const [searchResult, setSearchResult] = React.useState([]);
-  const [savedArticles, setSavedArticles] = React.useState([]);
-  // const [savedKeywords, setSavedKeywords] = React.useState([]);
-  const [isSearchCompleted, setIsSearchCompleted] = React.useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+  const [savedArticles, setSavedArticles] = useState([]);
+  const [isSearchCompleted, setIsSearchCompleted] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState();
-  const [isRenderLoading, setIsRenderLoading] = useState(false)
+  const [isRenderLoading, setIsRenderLoading] = useState(false);
+  const [infoTipText, setInfoTipText] = useState('');
  
   function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
@@ -43,12 +44,6 @@ function App() {
     } if (pathname === '/') {
       setIsHeaderBlack(false)
     };
-  }
-  function handleRenderLoading(){
-    if (!isRenderLoading){
-      setIsRenderLoading(true);
-    } 
-    setIsRenderLoading(false);
   }
   function handleCloseAllPopups() {
       setIsPopupForLoginOpen(false);
@@ -80,7 +75,11 @@ function App() {
     setIsMobilePopupOpen(true);
   }
   function logout() {
-
+    setIsLogin(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem("currentKeyword");
+    localStorage.removeItem(searchResult)
+    history.push('/');
   }
   function handleOverlayClick(evt) {
     if (evt.target.classList.contains('popup')) {
@@ -92,8 +91,10 @@ function App() {
     newsApi.getArticles(keyword)
     .then((result) =>{
       setSearchResult(result.articles);
-      setIsSearchCompleted(true);
       setCurrentKeyword(keyword);
+      localStorage.setItem(searchResult, JSON.stringify(result.articles));
+      localStorage.setItem("currentKeyword", keyword);
+      setIsSearchCompleted(true);
     })
     .catch((error) => {
         console.error(error);
@@ -144,7 +145,7 @@ function App() {
           );
           setIsLogin(true);
           }
-          //setInfoText('Вход выполнен!');
+          setInfoTipText('Вход выполнен!');
         })
       .then(() => {
         handleCloseAllPopups() ;
@@ -154,18 +155,14 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-  // Регистрация пользователя
   function onSignup({ password, email, name }) {
     signupApi({ password, email, name })
       .then((res) => {
-        if (res.data) {
-          //setInfoText('Вы успешно зарегистрировались!');
-        }
-        if (res.error) {
-          //setInfoText(`Что-то пошло не так! Попробуйте ещё раз. ${res.error}`);
+        if (res.email) {
+          setInfoTipText('Вы успешно зарегистрировались!');
         }
         if (res.message) {
-          //setInfoText(`Что-то пошло не так! Попробуйте ещё раз. ${res.message}`);
+          setInfoTipText(`Что-то пошло не так! Попробуйте ещё раз. ${res.message}`);
         }
       })
       .then(() => {
@@ -194,7 +191,15 @@ function App() {
       });
     }
   }
-
+  useEffect(() => {
+    const savedSearchResult = localStorage.getItem(searchResult);
+    const savedCurrentKeyword = localStorage.getItem("currentKeyword");
+    if (savedSearchResult && savedCurrentKeyword){
+      setSearchResult(JSON.parse(savedSearchResult));
+      setCurrentKeyword(savedCurrentKeyword)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localStorage]);
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -253,6 +258,8 @@ function App() {
         onOverlayClick={handleOverlayClick}
       />
       <PopupInfoTip
+        isLogin={isLogin}
+        infoTipText={infoTipText}
         isOpen={isPopupInfoTipOpen}
         onClose={handleCloseAllPopups}
         onPopupForLogin={handlePopupForLogin}

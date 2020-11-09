@@ -4,9 +4,7 @@ import Preloader from '../Preloader/Preloader';
 import notFoundIcon from '../../images/not-found.svg';
 
 function SearchResult(props) {
-  
-  
-  let [cardsNumber, setCardsNumber] = useState(3);
+  const [cardsNumber, setCardsNumber] = useState(3);
   const cards = props.searchResult.slice(0, 0+cardsNumber);
   const isSearchSuccess = props.searchResult.length !== 0 ? true : false;
   const isNotResult = ( props.searchResult.length === 0 && props.isSearchCompleted ) ? true : false;

@@ -27,7 +27,7 @@
   align-items: flex-start;
   margin: 207px auto auto;
   max-width: 430px;
-  min-height: auto;
+  min-height: 120px;
   background-color: white;
   border-radius: 16px;
   font-style: normal;
@@ -80,7 +80,7 @@
   visibility: visible;
 }
 .popup__title {
-  margin: 34px auto 0 36px;
+  margin: 34px 36px 0;
   display: block;
   justify-self: start;
   color: #1a1b22;

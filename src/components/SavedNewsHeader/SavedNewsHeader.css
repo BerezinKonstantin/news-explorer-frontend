@@ -27,6 +27,9 @@
 .saved-news-header__info {
   margin: 28px auto 56px 104px;
 }
+.saved-news-header__info-bold {
+  font-weight: 500;
+}
 /*Tablet version*/
 @media (max-width: 1027px) {
   .saved-news-header__sub-title {

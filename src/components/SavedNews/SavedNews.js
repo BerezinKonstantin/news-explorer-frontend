@@ -7,7 +7,6 @@ function SavedNews(props) {
     props.getSavedArticles();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [] );
-console.log(props.savedArticles);
   return (
     <main className='saved-news'>
       <SavedNewsHeader 
