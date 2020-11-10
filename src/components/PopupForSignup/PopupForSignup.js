@@ -7,7 +7,7 @@ function PopupForSignup(props) {
       title='Регистрация'
       name='signup'
       inputId='signup'
-      isOpen={props.isOpen}
+      isPopupForSignupOpen={props.isPopupForSignupOpen}
       onClose={props.onClose}
       buttonName='Зарегистрироваться'
       buttonLink="Войти"
@@ -15,6 +15,11 @@ function PopupForSignup(props) {
       inputNameClass='popup__input-name-wrapper_active'
       onOverlayClick={props.onOverlayClick}
       onSubmit={props.onSubmit}
+      isValid={props.isValid}
+      onChange={props.onChange}
+      values={props.values}
+      errors={props.errors}
+      submitError={props.submitError}
     />
   );
 }

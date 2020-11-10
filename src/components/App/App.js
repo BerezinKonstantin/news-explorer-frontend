@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useHistory, Route, Switch } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -58,6 +58,7 @@ function App() {
     }
   }
   function handlePopupForSignup() {
+    resetForm();
     setIsPopupForSignupOpen(true);
     setIsPopupForLoginOpen(false);
     document.addEventListener('keydown', onEscClose);
@@ -67,6 +68,7 @@ function App() {
     document.addEventListener('keydown', onEscClose);
   }
   function handlePopupForLogin() {
+    resetForm();
     setIsPopupForSignupOpen(false);
     setIsPopupForLoginOpen(true);
     document.addEventListener('keydown', onEscClose);
@@ -133,19 +135,22 @@ function App() {
   function onLogin({ email, password }) {
     loginApi({ email, password })
         .then((res) => {
-          console.log(res);
           if (res.token) {
-          localStorage.setItem('token', res.token);
-          setCurrentUser(
-            {
-              email: res.email,
-              name: res.name,
-              _id: res._id
+            localStorage.setItem('token', res.token);
+            setCurrentUser(
+              {
+                email: res.email,
+                name: res.name,
+                _id: res._id
+              }
+            );
+            setIsLogin(true);
+            setInfoTipText('Вход выполнен!');
             }
-          );
-          setIsLogin(true);
+          if (res.message) {
+            setSubmitError(res.message);
+            throw new Error()
           }
-          setInfoTipText('Вход выполнен!');
         })
       .then(() => {
         handleCloseAllPopups() ;
@@ -162,7 +167,8 @@ function App() {
           setInfoTipText('Вы успешно зарегистрировались!');
         }
         if (res.message) {
-          setInfoTipText(`Что-то пошло не так! Попробуйте ещё раз. ${res.message}`);
+          setSubmitError(res.message);
+          throw new Error()
         }
       })
       .then(() => {
@@ -191,6 +197,46 @@ function App() {
       });
     }
   }
+  const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
+  const [isValid, setIsValid] = useState(false); 
+  const [submitError, setSubmitError] = useState('');
+  
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    setValues({...values, [name]: value});
+    setErrors({...errors, [name]: target.validationMessage });
+    setIsValid(target.closest("form").checkValidity());
+  };
+  const resetForm = useCallback(
+    (newValues = {}, newErrors = {}, newIsValid = false, newSubmitError = '') => {
+      setValues(newValues);
+      setErrors(newErrors);
+      setIsValid(newIsValid);
+      setSubmitError(newSubmitError);
+    },
+    [setValues, setErrors, setIsValid, setSubmitError]
+  );
+
+  function handlePopupSubmit(ev) {
+    ev.preventDefault();
+    if (isPopupForSignupOpen){
+      onSignup({
+          password: values.password,
+          email: values.email,
+          name: values.name 
+        }
+      );
+    } if (isPopupForLoginOpen) {
+       onLogin({
+          password: values.password,
+          email: values.email,
+        }
+      );
+    }
+  }   
   useEffect(() => {
     const savedSearchResult = localStorage.getItem(searchResult);
     const savedCurrentKeyword = localStorage.getItem("currentKeyword");
@@ -244,18 +290,28 @@ function App() {
       </Switch>
       <Footer/>
       <PopupForLogin
-        isOpen={isPopupForLoginOpen}
+        isPopupForLoginOpen={isPopupForLoginOpen}
         onClose={handleCloseAllPopups}
         onPopupForSignup={handlePopupForSignup}
         onOverlayClick={handleOverlayClick}
-        onSubmit={onLogin}
+        onSubmit={handlePopupSubmit}
+        isValid={isValid}
+        onChange={handleChange}
+        values={values}
+        errors={errors}
+        submitError={submitError}
       />
       <PopupForSignup
-        isOpen={isPopupForSignupOpen}
+        isPopupForSignupOpen={isPopupForSignupOpen}
         onClose={handleCloseAllPopups}
         onPopupForLogin={handlePopupForLogin}
-        onSubmit={onSignup}
+        onSubmit={handlePopupSubmit}
         onOverlayClick={handleOverlayClick}
+        isValid={isValid}
+        onChange={handleChange}
+        values={values}
+        errors={errors}
+        submitError={submitError}
       />
       <PopupInfoTip
         isLogin={isLogin}

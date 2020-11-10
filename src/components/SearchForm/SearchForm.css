@@ -133,4 +133,10 @@
     height: 56px;
     width: 100%;
   }
+  .search-form__input-wrapper {
+    flex-direction: column;
+  }
+  .search-form__error {
+    top: -36px;
+  }
 }

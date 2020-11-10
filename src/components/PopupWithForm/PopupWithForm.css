@@ -67,14 +67,10 @@
   text-align: left;
   opacity: 1;
   margin: 3px auto 0 0;
-  visibility: hidden;
-}
-.popup__input-error-text_active {
-  visibility: visible;
 }
 .popup__auth-error-text {
-  margin: 3px auto 8px;
-  visibility: hidden;
+  margin: 28px auto 8px;
+  visibility: visible;
 }
 .popup__auth-error-text_active {
   visibility: visible;
@@ -169,12 +165,7 @@
   transition: linear 0.2s;
   cursor: pointer;
 }
-.popup__input-name-wrapper_hidden {
-  display: none;
-}
-.popup__input-name-wrapper_active {
-  display: block;
-}
+
 /*Mobile version*/
 @media (max-width: 650px) {
   .popup {
