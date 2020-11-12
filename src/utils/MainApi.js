@@ -1,9 +1,8 @@
-import { basedUrlMainApi as basedUrl } from './constants';
+import { basedUrlMainApi as basedUrl } from "./constants";
 
 export const signup = ({ password, email, name }) => {
   return fetch(`${basedUrl}/signup`, {
     method: 'POST',
-    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -25,7 +24,6 @@ export const signup = ({ password, email, name }) => {
 export const login = ({ password, email }) => {
   return fetch(`${basedUrl}/signin`, {
     method: 'POST',
-    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -36,17 +34,20 @@ export const login = ({ password, email }) => {
     }),
   })
     .then((response) => {
+      console.log(response);
       return response.json();
+      
     })
     .then((res) => {
+      console.log(res);
       return res;
-    });
+    })
+    .catch((err) => console.log(err));
 };
 
 export const getArticles = (token) => {
   return fetch(`${basedUrl}/articles`, {
     method: 'GET',
-    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -64,7 +65,6 @@ export const getArticles = (token) => {
 export const checkToken = (token) => {
   return fetch(`${basedUrl}/users/me`, {
     method: 'GET',
-    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -82,7 +82,6 @@ export const checkToken = (token) => {
 export const saveArticle = (token, data) => {
   return fetch(`${basedUrl}/articles`, {
     method: 'POST',
-    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -109,7 +108,6 @@ export const saveArticle = (token, data) => {
 export const deleteArticle = (token, cardId) => {
   return fetch(`${basedUrl}/articles/${cardId}`, {
     method: 'DELETE',
-    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
