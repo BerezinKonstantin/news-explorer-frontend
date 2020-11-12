@@ -10,7 +10,7 @@ function PopupForLogin(props) {
       isPopupForLoginOpen={props.isPopupForLoginOpen}
       onClose={props.onClose}
       buttonName='Войти'
-      buttonLink="Зарегистрироваться"
+      buttonLink='Зарегистрироваться'
       onButtonClick={props.onPopupForSignup}
       inputNameClass='popup__input-name-wrapper_hidden'
       onOverlayClick={props.onOverlayClick}

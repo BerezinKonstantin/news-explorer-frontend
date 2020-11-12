@@ -18,11 +18,11 @@ function SearchResult(props) {
     {
       (isSearchSuccess || props.isRenderLoading || isNotResult) &&
       (
-        <div className="search-result">
+        <div className='search-result'>
           { props.isRenderLoading && 
             <>
               <Preloader />
-              <p className="search-result__subtitle">
+              <p className='search-result__subtitle'>
                   Идет поиск новостей...
               </p>
             </>
@@ -30,7 +30,7 @@ function SearchResult(props) {
           { isSearchSuccess && 
             (
               <>
-                <h1 className="search-result__title">
+                <h1 className='search-result__title'>
                   Результаты поиска
                 </h1>
                 <NewsCardList
@@ -38,11 +38,12 @@ function SearchResult(props) {
                   keyword={props.keyword}
                   onSaveArticle={props.onSaveArticle}
                   onDeleteArticle={props.onDeleteArticle}
+                  isLogin={props.isLogin}
                 />
                 { (cards.length < props.searchResult.length ) &&
                   (<button
-                  className="search-result__more_button"
-                  type="button"
+                  className='search-result__more_button'
+                  type='button'
                   onClick={showMoreCards}
                   >
                     Показать ещё
@@ -55,14 +56,14 @@ function SearchResult(props) {
             (
               <>
                 <img
-                   className="search-result__img_not-result"
+                   className='search-result__img_not-result'
                    src={notFoundIcon}
                    alt='Ничего не найдено'
                 />
-                <h2 className="search-result__title_not-result">
+                <h2 className='search-result__title_not-result'>
                   Ничего не найдено
                 </h2>
-                <p className="search-result__subtitle">
+                <p className='search-result__subtitle'>
                   К сожалению, по вашему запросу ничего не найдено.
                 </p>
               </>

@@ -26,7 +26,7 @@ function PopupInfoTip(props) {
           {props.infoTipText}
         </h2>
         {!props.isLogin && <button
-          className="popup__link-button-info-tip"
+          className='popup__link-button-info-tip'
           type='button'
           onClick={redirectToLogin} 
         > 

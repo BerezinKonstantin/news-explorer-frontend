@@ -11,6 +11,7 @@ function NewsCardList(props) {
             keyword={props.keyword}
             onSaveArticle={props.onSaveArticle}
             onDeleteArticle={props.onDeleteArticle}
+            isLogin={props.isLogin}
           />
         ))}
     </ul> 

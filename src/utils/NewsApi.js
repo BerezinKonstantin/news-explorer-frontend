@@ -1,4 +1,4 @@
-import { apiKey, basedUrlNewsApi as basedUrl } from "./constants";
+import { apiKey, basedUrlNewsApi as basedUrl } from './constants';
 
 export default class Api {
   constructor() {
@@ -18,11 +18,8 @@ export default class Api {
     });
   }
   getArticles(keyword) {
-    return this._fetch(`${basedUrl}q=${keyword}&from=${this._formatDate(this._initialDate)}&to=${this._formatDate(this._currentDate)}&sortBy=publishedAt&pageSize=100`, {
-      method: "GET",
-      headers: {
-        'x-api-key': apiKey,
-      },
+    return this._fetch(`${basedUrl}q=${keyword}&from=${this._formatDate(this._initialDate)}&to=${this._formatDate(this._currentDate)}&sortBy=publishedAt&pageSize=100&apiKey=${apiKey} `, {
+      method: 'GET'
     });
   }
  

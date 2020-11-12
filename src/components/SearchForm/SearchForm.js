@@ -5,7 +5,7 @@ function SearchForm(props) {
   const [isValid, setIsValid] = React.useState(false);
   const [isErrHide, setIsErrHide] = React.useState(true);
   const handleChange = (ev) => {
-    setIsValid(ev.target.closest("form").checkValidity());
+    setIsValid(ev.target.closest('form').checkValidity());
   };
   function handleSubmit(ev) {
     ev.preventDefault();
@@ -33,7 +33,7 @@ function SearchForm(props) {
         {!isValid && !isErrHide && <span className='search-form__error'>
             Нужно ввести ключевое слово для поиска
         </span>}
-        <div className="search-form__input-wrapper">
+        <div className='search-form__input-wrapper'>
         <input
           type ='text'
           id='input-search'

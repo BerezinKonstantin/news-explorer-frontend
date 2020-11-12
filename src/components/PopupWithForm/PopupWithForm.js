@@ -42,7 +42,7 @@ function PopupWithForm(props) {
             autoComplete='email'
             required
             placeholder='Введите почту'
-            pattern="([\w.%+-]+)@([\w-]+\.)+([\w]{2,})"
+            pattern='([\w.%+-]+)@([\w-]+\.)+([\w]{2,})'
           />
           {props.errors.email && <span
             className='popup__input-error-text'
@@ -94,7 +94,7 @@ function PopupWithForm(props) {
             </span>}
             </>)}
           <span
-            className={'popup__input-error-text popup__auth-error-text' + (props.submitError ? " popup__auth-error-text_active" : "") }
+            className={'popup__input-error-text popup__auth-error-text' + (props.submitError ? ' popup__auth-error-text_active' : '') }
           >
             {props.submitError}
           </span>
@@ -112,7 +112,7 @@ function PopupWithForm(props) {
             или
           </span>
           <button
-          className="popup__link-button"
+          className='popup__link-button'
           type='button'
           onClick={props.onButtonClick} 
           > 

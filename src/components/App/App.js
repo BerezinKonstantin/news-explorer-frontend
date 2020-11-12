@@ -7,7 +7,7 @@ import SavedNews from '../SavedNews/SavedNews';
 import PopupForLogin from '../PopupForLogin/PopupForLogin';
 import PopupForSignup from '../PopupForSignup/PopupForSignup';
 import PopupInfoTip from '../PopupInfoTip/PopupInfoTip';
-import NewsApi from "../../utils/NewsApi";
+import NewsApi from '../../utils/NewsApi';
 import {
   signup as signupApi,
   login as loginApi,
@@ -16,7 +16,7 @@ import {
   getArticles as getArticlesApi,
   deleteArticle as deleteArticleApi,
 } from '../../utils/MainApi';
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './App.css';
 
@@ -33,11 +33,33 @@ function App() {
   const [isMobilePopupOpen, setIsMobilePopupOpen] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [savedArticles, setSavedArticles] = useState([]);
+  const [sortedKeywords, setSortedKeywords] = useState([]);
   const [isSearchCompleted, setIsSearchCompleted] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState();
   const [isRenderLoading, setIsRenderLoading] = useState(false);
   const [infoTipText, setInfoTipText] = useState('');
- 
+  const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
+  const [isValid, setIsValid] = useState(false); 
+  const [submitError, setSubmitError] = useState('');
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    setValues({...values, [name]: value});
+    setErrors({...errors, [name]: target.validationMessage });
+    setIsValid(target.closest('form').checkValidity());
+  };
+  const resetForm = useCallback(
+    (newValues = {}, newErrors = {}, newIsValid = false, newSubmitError = '') => {
+      setValues(newValues);
+      setErrors(newErrors);
+      setIsValid(newIsValid);
+      setSubmitError(newSubmitError);
+    },
+    [setValues, setErrors, setIsValid, setSubmitError]
+  );
+
   function handleHeaderChange(pathname) {
     if (pathname === '/saved-news') {
       setIsHeaderBlack(true)
@@ -79,7 +101,7 @@ function App() {
   function logout() {
     setIsLogin(false);
     localStorage.removeItem('token');
-    localStorage.removeItem("currentKeyword");
+    localStorage.removeItem('currentKeyword');
     localStorage.removeItem(searchResult)
     history.push('/');
   }
@@ -89,17 +111,20 @@ function App() {
     }
   }
   function getSearchResult(keyword) {
+    const convertedKeyword = keyword[0].toUpperCase() + keyword.slice(1)
     setIsRenderLoading(true);
-    newsApi.getArticles(keyword)
+    newsApi.getArticles(convertedKeyword)
     .then((result) =>{
       setSearchResult(result.articles);
-      setCurrentKeyword(keyword);
-      localStorage.setItem(searchResult, JSON.stringify(result.articles));
-      localStorage.setItem("currentKeyword", keyword);
+      setCurrentKeyword(convertedKeyword);
+      localStorage.setItem('savedSearchResult', JSON.stringify(result.articles));
+      localStorage.setItem('currentKeyword', convertedKeyword);
       setIsSearchCompleted(true);
     })
     .catch((error) => {
         console.error(error);
+        setInfoTipText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        handlePopupInfoTip()
     })
     .finally(()=>{
       setIsRenderLoading(false)
@@ -110,6 +135,23 @@ function App() {
     getArticlesApi(token)
     .then((result) =>{
       setSavedArticles(result);
+      return result
+    })
+    .then((result) =>{
+      const articles = result
+      const keywords = articles.map(function(el){
+        return el.keyword
+      });
+      const convertedKeywords = keywords.reduce(function(prevVal, item) {
+        if (!prevVal[item]) {
+          prevVal[item] = 1;
+        } else {
+          prevVal[item] += 1;
+        }
+        return prevVal;
+      }, {})
+      const sorrtedKeywords =  Object.keys(convertedKeywords).sort((a, b) => convertedKeywords[b] - convertedKeywords[a]);
+      setSortedKeywords(sorrtedKeywords);
     })
     .catch((error) => {
         console.error(error);
@@ -137,6 +179,7 @@ function App() {
         .then((res) => {
           if (res.token) {
             localStorage.setItem('token', res.token);
+            localStorage.setItem('isLogin', true);
             setCurrentUser(
               {
                 email: res.email,
@@ -197,29 +240,6 @@ function App() {
       });
     }
   }
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(false); 
-  const [submitError, setSubmitError] = useState('');
-  
-  const handleChange = (event) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    setValues({...values, [name]: value});
-    setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
-  };
-  const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false, newSubmitError = '') => {
-      setValues(newValues);
-      setErrors(newErrors);
-      setIsValid(newIsValid);
-      setSubmitError(newSubmitError);
-    },
-    [setValues, setErrors, setIsValid, setSubmitError]
-  );
-
   function handlePopupSubmit(ev) {
     ev.preventDefault();
     if (isPopupForSignupOpen){
@@ -237,9 +257,10 @@ function App() {
       );
     }
   }   
+  
   useEffect(() => {
-    const savedSearchResult = localStorage.getItem(searchResult);
-    const savedCurrentKeyword = localStorage.getItem("currentKeyword");
+    const savedSearchResult = localStorage.getItem('savedSearchResult');
+    const savedCurrentKeyword = localStorage.getItem('currentKeyword');
     if (savedSearchResult && savedCurrentKeyword){
       setSearchResult(JSON.parse(savedSearchResult));
       setCurrentKeyword(savedCurrentKeyword)
@@ -250,7 +271,6 @@ function App() {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
-  
   useEffect(() => {
     handleHeaderChange(pathname)
   }, [pathname]);
@@ -267,7 +287,7 @@ function App() {
         onMobilePopupOpen={handleMobilePopup}
       />
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Main
             onSaveArticle={saveArticle}
             onDeleteArticle={deleteArticle}
@@ -276,14 +296,16 @@ function App() {
             isSearchCompleted={isSearchCompleted}
             keyword={currentKeyword}
             isRenderLoading={isRenderLoading}
+            isLogin={isLogin}
           />
         </Route>
         <ProtectedRoute
-          path="/saved-news"
+          path='/saved-news'
           component={SavedNews}
           isLogin={isLogin}
           onPopupForSignup={handlePopupForSignup}
           savedArticles={savedArticles}
+          sortedKeywords={sortedKeywords}
           getSavedArticles={getSavedArticles}
           onDeleteArticle={deleteArticle}
         />

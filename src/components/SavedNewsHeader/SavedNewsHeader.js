@@ -2,16 +2,9 @@ import React, { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function SavedNewsHeader(props) {
-  const articlesArray = props.savedArticles;
-  const numberOfArticles = articlesArray.length;
-  const keywordsArray = articlesArray.map(function(el){
-    return el.keyword
-  });
-  console.log(keywordsArray);
+  const articles = props.savedArticles;
+  const numberOfArticles = articles.length;
   
-  const sortedKeywordsArray = keywordsArray.sort();
-  console.log(sortedKeywordsArray);
-
   const currentUser = useContext(CurrentUserContext);
   
   return (
@@ -22,17 +15,21 @@ function SavedNewsHeader(props) {
       <h1 className='saved-news-header__title'>
         {currentUser.name}, у вас {numberOfArticles} сохранённых статей
       </h1>
-      <p className='saved-news-header__info'>
+    {props.sortedKeywords.length > 0 &&
+      (<p className='saved-news-header__info'>
         По ключевым словам:
         <span className='saved-news-header__info-bold'>
-         &nbsp;Природа, Тайга&nbsp;
+         &nbsp;{props.sortedKeywords[0]}{props.sortedKeywords.length > 1 && (', ' + props.sortedKeywords[1])}&nbsp;
         </span>
-          и 
+        {props.sortedKeywords.length > 2 &&
+        <>и 
         <span className='saved-news-header__info-bold' >
-          &nbsp;2-м&nbsp;
+          &nbsp;{props.sortedKeywords.length - 2}-м&nbsp;
         </span>
         другим
-      </p>
+        </>}
+      </p>)
+    }
     </div> 
   );
 }

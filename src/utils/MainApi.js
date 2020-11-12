@@ -1,4 +1,4 @@
-import { basedUrlMainApi as basedUrl } from "./constants";
+import { basedUrlMainApi as basedUrl } from './constants';
 
 export const signup = ({ password, email, name }) => {
   return fetch(`${basedUrl}/signup`, {

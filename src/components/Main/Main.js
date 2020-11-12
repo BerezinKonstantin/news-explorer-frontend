@@ -18,6 +18,7 @@ function Main(props) {
         onSaveArticle={props.onSaveArticle}
         onDeleteArticle={props.onDeleteArticle}
         isRenderLoading={props.isRenderLoading}
+        isLogin={props.isLogin}
       /> 
       <About/>
     </main>

@@ -37,6 +37,9 @@
 .popup__form:hover {
   cursor: auto;
 }
+.popup__form-info-tip {
+  padding: 0 0 24px 0;
+}
 .popup__input {
   display: flex;
   width: 358px;

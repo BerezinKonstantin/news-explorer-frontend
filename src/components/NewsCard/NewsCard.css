@@ -141,6 +141,10 @@
 .card__button_save_active {
   background-image: url(../../images/save-icon-blue.svg);
 }
+.card__button_save_active:hover {
+  background-image: url(../../images/save-icon-blue.svg);
+  opacity: 0.9;
+}
 @media (max-width: 1276px) {
   .card__title {
     font-size: 22px;

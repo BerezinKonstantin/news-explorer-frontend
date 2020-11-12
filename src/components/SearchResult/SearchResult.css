@@ -31,11 +31,11 @@
   font-weight: 500;
   line-height: 24px;
   margin: 64px auto 0;
+  cursor: pointer;
 }
-.search-form__more_button:hover {
+.search-result__more_button:hover {
   opacity: 0.9;
   transition: linear 0.2s;
-  cursor: pointer;
 }
 .search-result__title_not-result {
   font-family: 'Roboto Slab', Arial, sans-serif;
