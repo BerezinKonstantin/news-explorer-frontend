@@ -1,27 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function PopupWithForm(props) {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [name, setName] = useState();
-
-  function handleChangeEmail(ev) {
-    setEmail(ev.target.value);
-  } 
-  function handleChangePassword(ev) {
-    setPassword(ev.target.value);
+  
+  let isOpenClassName;
+  if (props.isPopupForSignupOpen || props.isPopupForLoginOpen) {
+    isOpenClassName = 'popup_opened';
   }
-  function handleChangeName(ev) {
-    setName(ev.target.value);
-  }
-  let isOpen;
-  if (props.isOpen) {
-    isOpen = 'popup_opened';
-  }
-      
+ 
   return (
     <section
-      className={`popup popup_for_${props.name} ${isOpen}`}
+      className={`popup popup_for_${props.name} ${isOpenClassName}`}
       onClick={props.onOverlayClick}
     >
       <form
@@ -30,6 +18,7 @@ function PopupWithForm(props) {
         action='#'
         method='POST'
         noValidate 
+        onSubmit={props.onSubmit}
       >
         <button
           className='popup__close-button'
@@ -45,80 +34,76 @@ function PopupWithForm(props) {
             Email
           </span>
           <input
-            id={`input-email-${props.inputId}`}
             className='popup__input popup__input_email'
             type='email'
             name='email'
-            defaultValue={email}
-            onChange={handleChangeEmail}
+            onChange={props.onChange}
+            value={props.values.email || ''}
             autoComplete='email'
             required
             placeholder='Введите почту'
-            pattern='^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'
+            pattern='([\w.%+-]+)@([\w-]+\.)+([\w]{2,})'
           />
-          <span
-            id={`input-email-${props.inputId}-error`}
+          {props.errors.email && <span
             className='popup__input-error-text'
           >
-            Неправильный формат email
-          </span>
+            {props.errors.email}
+          </span>}
           <span className='popup__input-label'>
             Пароль
           </span>
           <input
-            id={`input-password-${props.inputId}`}
             className='popup__input popup__input_password'
             type='password'
             name='password'
-            defaultValue={password}
-            onChange={handleChangePassword}
+            onChange={props.onChange}
+            value={props.values.password || ''}
             autoComplete='current-password'
             required
             placeholder='Введите пароль'
-            pattern='[0-9a-zA-Z!@#$%^&*]{8,32}'
             maxLength='32'
             minLength='8'
           />
-          <span
-            id={`input-password-${props.inputId}-error`} 
+          {props.errors.password && <span
             className='popup__input-error-text'
           >
-            Неправильный пароль
-          </span>
-          <div className={props.inputNameClass}>
+            {props.errors.password}
+          </span>}
+          {props.isPopupForSignupOpen &&
+            (
+              <>
             <span className='popup__input-label'>
               Имя
             </span>
             <input
-              id={`input-name-${props.inputId}`}
               className='popup__input popup__input_name'
               type='text'
               name='name'
-              defaultValue={name}
-              onChange={handleChangeName}
+              onChange={props.onChange}
+               value={props.values.name || ''}
               required
               placeholder='Введите свое имя'
-              pattern='/[а-яА-Яa-zA-Z]/i'
+              pattern='[а-яА-Яa-zA-Z]{2,20}'
               maxLength='20'
               minLength='2'
             />
-            <span 
-              id={`input-name-${props.inputId}-error`}
+            {props.errors.name && <span 
               className='popup__input-error-text'
             >
-              Имя - обязательное поле!
-            </span>
-          </div>
+              {props.errors.name}
+            </span>}
+            </>)}
           <span
-            className='popup__input-error-text popup__auth-error-text'
+            className={'popup__input-error-text popup__auth-error-text' + (props.submitError ? ' popup__auth-error-text_active' : '') }
           >
-            Имя - обязательное поле!
+            {props.submitError}
           </span>
         </fieldset>
         <button
           className='popup__submit-button'
           type='submit'
           defaultValue={props.buttonName}
+          disabled={!props.isValid}
         >
           {props.buttonName}
         </button>
@@ -127,7 +112,7 @@ function PopupWithForm(props) {
             или
           </span>
           <button
-          className="popup__link-button"
+          className='popup__link-button'
           type='button'
           onClick={props.onButtonClick} 
           > 

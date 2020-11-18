@@ -7,13 +7,19 @@ function PopupForLogin(props) {
       title='Вход'
       name='login'
       inputId='login'
-      isOpen={props.isOpen}
+      isPopupForLoginOpen={props.isPopupForLoginOpen}
       onClose={props.onClose}
       buttonName='Войти'
-      buttonLink="Зарегистрироваться"
+      buttonLink='Зарегистрироваться'
       onButtonClick={props.onPopupForSignup}
       inputNameClass='popup__input-name-wrapper_hidden'
       onOverlayClick={props.onOverlayClick}
+      onSubmit={props.onSubmit}
+      isValid={props.isValid}
+      onChange={props.onChange}
+      values={props.values}
+      errors={props.errors}
+      submitError={props.submitError}
     />    
   );
 }

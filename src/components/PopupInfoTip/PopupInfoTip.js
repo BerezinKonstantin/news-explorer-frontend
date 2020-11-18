@@ -23,15 +23,15 @@ function PopupInfoTip(props) {
         >
         </button>
         <h2 className='popup__title'>
-          Пользователь успешно зарегистрирован!
+          {props.infoTipText}
         </h2>
-        <button
-          className="popup__link-button-info-tip"
+        {!props.isLogin && <button
+          className='popup__link-button-info-tip'
           type='button'
           onClick={redirectToLogin} 
         > 
           Войти
-        </button> 
+        </button> }
       </div>
     </section>
   );
