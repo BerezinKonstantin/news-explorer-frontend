@@ -20,3 +20,4 @@ Web приложение - React
 https://github.com/BerezinKonstantin/news-explorer-api
 
 Так же вы можете посмотреть на GithubPages отдельно клиентскую часть:
+https://berezinkonstantin.github.io/news-explorer-frontend
