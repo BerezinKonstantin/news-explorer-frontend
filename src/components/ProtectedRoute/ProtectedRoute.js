@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 const ProtectedRoute = ({ component: Component, ...props }) => {
-  const isLogin = localStorage.getItem('isLogin');
+  // const isLogin = localStorage.getItem('isLogin');
   useEffect(() =>{
-    if (!isLogin){
+    if (!props.isLogin){
       props.onPopupForSignup()
     }
   });
@@ -12,7 +12,7 @@ const ProtectedRoute = ({ component: Component, ...props }) => {
   return (
     <Route>
       { () => 
-          isLogin ? <Component {...props} /> : (<Redirect to='/'/>)
+          props.isLogin ? <Component {...props} /> : (<Redirect to='/'/>)
         }
     </Route>
   );
