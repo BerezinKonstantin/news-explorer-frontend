@@ -19,5 +19,3 @@ Web приложение - React
 Для полноценной работы сервиса вам понадобится так же развернуть backend-часть:
 https://github.com/BerezinKonstantin/news-explorer-api
 
-Так же вы можете посмотреть на GithubPages отдельно клиентскую часть:
-https://berezinkonstantin.github.io/news-explorer-frontend
