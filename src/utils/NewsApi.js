@@ -1,13 +1,15 @@
-import { apiKey, basedUrlNewsApi as basedUrl } from './constants';
+import { apiKey, basedUrlNewsApi as basedUrl } from "./constants";
 
 export default class Api {
   constructor() {
     this._currentDate = new Date();
     this._initialDate = new Date();
-    this._initialDate.setDate(this._initialDate.getDate()-7);
+    this._initialDate.setDate(this._initialDate.getDate() - 7);
     this._formatDate = (date) => {
-    return (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate())
-    }
+      return (
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+      );
+    };
   }
   _fetch(url, params) {
     return fetch(url, params).then((result) => {
@@ -18,9 +20,15 @@ export default class Api {
     });
   }
   getArticles(keyword) {
-    return this._fetch(`${basedUrl}q=${keyword}&from=${this._formatDate(this._initialDate)}&to=${this._formatDate(this._currentDate)}&sortBy=publishedAt&pageSize=100&apiKey=${apiKey} `, {
-      method: 'GET'
-    });
+    return this._fetch(
+      `${basedUrl}q=${keyword}&from=${this._formatDate(
+        this._initialDate
+      )}&to=${this._formatDate(
+        this._currentDate
+      )}&sortBy=publishedAt&pageSize=100&apiKey=${apiKey} `,
+      {
+        method: "GET",
+      }
+    );
   }
- 
 }

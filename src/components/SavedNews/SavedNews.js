@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import NewsCardList from '../NewsCardList/NewsCardList';
-import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
+import React, { useEffect } from "react";
+import NewsCardList from "../NewsCardList/NewsCardList";
+import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 
 function SavedNews(props) {
   useEffect(() => {
     props.getSavedArticles();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [] );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <main className='saved-news'>
-      <SavedNewsHeader 
+    <main className="saved-news">
+      <SavedNewsHeader
         savedArticles={props.savedArticles}
         sortedKeywords={props.sortedKeywords}
       />
@@ -18,8 +18,8 @@ function SavedNews(props) {
         onDeleteArticle={props.onDeleteArticle}
         isLogin={props.isLogin}
       />
-    </main> 
+    </main>
   );
-}   
+}
 
 export default SavedNews;

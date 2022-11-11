@@ -2,15 +2,15 @@ import { basedUrlMainApi as basedUrl } from "./constants";
 
 export const signup = ({ password, email, name }) => {
   return fetch(`${basedUrl}/signup`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       password: password,
       email: email,
-      name: name
+      name: name,
     }),
   })
     .then((response) => {
@@ -23,10 +23,10 @@ export const signup = ({ password, email, name }) => {
 
 export const login = ({ password, email }) => {
   return fetch(`${basedUrl}/signin`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       password: password,
@@ -36,7 +36,6 @@ export const login = ({ password, email }) => {
     .then((response) => {
       console.log(response);
       return response.json();
-      
     })
     .then((res) => {
       console.log(res);
@@ -47,10 +46,10 @@ export const login = ({ password, email }) => {
 
 export const getArticles = (token) => {
   return fetch(`${basedUrl}/articles`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   })
@@ -64,10 +63,10 @@ export const getArticles = (token) => {
 
 export const checkToken = (token) => {
   return fetch(`${basedUrl}/users/me`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   })
@@ -81,10 +80,10 @@ export const checkToken = (token) => {
 
 export const saveArticle = (token, data) => {
   return fetch(`${basedUrl}/articles`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -107,10 +106,10 @@ export const saveArticle = (token, data) => {
 
 export const deleteArticle = (token, cardId) => {
   return fetch(`${basedUrl}/articles/${cardId}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   })

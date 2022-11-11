@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation, useHistory, Route, Switch } from 'react-router-dom';
-import Header from '../Header/Header';
-import Main from '../Main/Main';
-import Footer from '../Footer/Footer';
-import SavedNews from '../SavedNews/SavedNews';
-import PopupForLogin from '../PopupForLogin/PopupForLogin';
-import PopupForSignup from '../PopupForSignup/PopupForSignup';
-import PopupInfoTip from '../PopupInfoTip/PopupInfoTip';
-import NewsApi from '../../utils/NewsApi';
+import React, { useState, useEffect, useCallback } from "react";
+import { useLocation, useHistory, Route, Switch } from "react-router-dom";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Footer from "../Footer/Footer";
+import SavedNews from "../SavedNews/SavedNews";
+import PopupForLogin from "../PopupForLogin/PopupForLogin";
+import PopupForSignup from "../PopupForSignup/PopupForSignup";
+import PopupInfoTip from "../PopupInfoTip/PopupInfoTip";
+import NewsApi from "../../utils/NewsApi";
 import {
   signup as signupApi,
   login as loginApi,
@@ -15,10 +15,10 @@ import {
   saveArticle as saveArticleApi,
   getArticles as getArticlesApi,
   deleteArticle as deleteArticleApi,
-} from '../../utils/MainApi';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import './App.css';
+} from "../../utils/MainApi";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import "./App.css";
 
 function App() {
   const history = useHistory();
@@ -37,21 +37,26 @@ function App() {
   const [isSearchCompleted, setIsSearchCompleted] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState();
   const [isRenderLoading, setIsRenderLoading] = useState(false);
-  const [infoTipText, setInfoTipText] = useState('');
+  const [infoTipText, setInfoTipText] = useState("");
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(false); 
-  const [submitError, setSubmitError] = useState('');
+  const [isValid, setIsValid] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    setValues({...values, [name]: value});
-    setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(target.closest('form').checkValidity());
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setIsValid(target.closest("form").checkValidity());
   };
   const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false, newSubmitError = '') => {
+    (
+      newValues = {},
+      newErrors = {},
+      newIsValid = false,
+      newSubmitError = ""
+    ) => {
       setValues(newValues);
       setErrors(newErrors);
       setIsValid(newIsValid);
@@ -61,21 +66,22 @@ function App() {
   );
 
   function handleHeaderChange(pathname) {
-    if (pathname === '/saved-news') {
-      setIsHeaderBlack(true)
-    } if (pathname === '/') {
-      setIsHeaderBlack(false)
-    };
+    if (pathname === "/saved-news") {
+      setIsHeaderBlack(true);
+    }
+    if (pathname === "/") {
+      setIsHeaderBlack(false);
+    }
   }
   function handleCloseAllPopups() {
-      setIsPopupForLoginOpen(false);
-      setIsPopupForSignupOpen(false)
-      setIsPopupInfoTipOpen(false);
-      setIsMobilePopupOpen(false);
-      document.removeEventListener('keydown', onEscClose)
+    setIsPopupForLoginOpen(false);
+    setIsPopupForSignupOpen(false);
+    setIsPopupInfoTipOpen(false);
+    setIsMobilePopupOpen(false);
+    document.removeEventListener("keydown", onEscClose);
   }
   function onEscClose(evt) {
-    if(evt.key === 'Escape'){
+    if (evt.key === "Escape") {
       handleCloseAllPopups();
     }
   }
@@ -83,120 +89,126 @@ function App() {
     resetForm();
     setIsPopupForSignupOpen(true);
     setIsPopupForLoginOpen(false);
-    document.addEventListener('keydown', onEscClose);
+    document.addEventListener("keydown", onEscClose);
   }
   function handlePopupInfoTip() {
     setIsPopupInfoTipOpen(true);
-    document.addEventListener('keydown', onEscClose);
+    document.addEventListener("keydown", onEscClose);
   }
   function handlePopupForLogin() {
     resetForm();
     setIsPopupForSignupOpen(false);
     setIsPopupForLoginOpen(true);
-    document.addEventListener('keydown', onEscClose);
+    document.addEventListener("keydown", onEscClose);
   }
   function handleMobilePopup() {
     setIsMobilePopupOpen(true);
   }
   function logout() {
     setIsLogin(false);
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentKeyword');
-    localStorage.removeItem(searchResult)
-    history.push('/');
+    localStorage.removeItem("token");
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("currentKeyword");
+    localStorage.removeItem(searchResult);
+    history.push("/");
   }
   function handleOverlayClick(evt) {
-    if (evt.target.classList.contains('popup')) {
+    if (evt.target.classList.contains("popup")) {
       handleCloseAllPopups();
     }
   }
   function getSearchResult(keyword) {
-    const convertedKeyword = keyword[0].toUpperCase() + keyword.slice(1)
+    const convertedKeyword = keyword[0].toUpperCase() + keyword.slice(1);
     setIsRenderLoading(true);
-    newsApi.getArticles(convertedKeyword)
-    .then((result) =>{
-      setSearchResult(result.articles);
-      setCurrentKeyword(convertedKeyword);
-      localStorage.setItem('savedSearchResult', JSON.stringify(result.articles));
-      localStorage.setItem('currentKeyword', convertedKeyword);
-      setIsSearchCompleted(true);
-    })
-    .catch((error) => {
+    newsApi
+      .getArticles(convertedKeyword)
+      .then((result) => {
+        setSearchResult(result.articles);
+        setCurrentKeyword(convertedKeyword);
+        localStorage.setItem(
+          "savedSearchResult",
+          JSON.stringify(result.articles)
+        );
+        localStorage.setItem("currentKeyword", convertedKeyword);
+        setIsSearchCompleted(true);
+      })
+      .catch((error) => {
         console.error(error);
-        setInfoTipText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
-        handlePopupInfoTip()
-    })
-    .finally(()=>{
-      setIsRenderLoading(false)
-    });
+        setInfoTipText(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+        handlePopupInfoTip();
+      })
+      .finally(() => {
+        setIsRenderLoading(false);
+      });
   }
   function getSavedArticles() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     getArticlesApi(token)
-    .then((result) =>{
-      setSavedArticles(result);
-      return result
-    })
-    .then((result) =>{
-      const articles = result
-      const keywords = articles.map(function(el){
-        return el.keyword
+      .then((result) => {
+        setSavedArticles(result);
+        return result;
+      })
+      .then((result) => {
+        const articles = result;
+        const keywords = articles.map(function (el) {
+          return el.keyword;
+        });
+        const convertedKeywords = keywords.reduce(function (prevVal, item) {
+          if (!prevVal[item]) {
+            prevVal[item] = 1;
+          } else {
+            prevVal[item] += 1;
+          }
+          return prevVal;
+        }, {});
+        const sorrtedKeywords = Object.keys(convertedKeywords).sort(
+          (a, b) => convertedKeywords[b] - convertedKeywords[a]
+        );
+        setSortedKeywords(sorrtedKeywords);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-      const convertedKeywords = keywords.reduce(function(prevVal, item) {
-        if (!prevVal[item]) {
-          prevVal[item] = 1;
-        } else {
-          prevVal[item] += 1;
-        }
-        return prevVal;
-      }, {})
-      const sorrtedKeywords =  Object.keys(convertedKeywords).sort((a, b) => convertedKeywords[b] - convertedKeywords[a]);
-      setSortedKeywords(sorrtedKeywords);
-    })
-    .catch((error) => {
-        console.error(error);
+  }
+  function saveArticle(data) {
+    const token = localStorage.getItem("token");
+    saveArticleApi(token, data).catch((error) => {
+      console.error(error);
     });
   }
-  function saveArticle(data){
-    const token = localStorage.getItem('token');
-    saveArticleApi(token, data)
-    .catch((error) => {
-        console.error(error);
-    });
-  }
-  function deleteArticle(cardId){
-    const token = localStorage.getItem('token');
+  function deleteArticle(cardId) {
+    const token = localStorage.getItem("token");
     deleteArticleApi(token, cardId)
-    .then(()=>{
-      getSavedArticles()
-    })
-    .catch((error) => {
+      .then(() => {
+        getSavedArticles();
+      })
+      .catch((error) => {
         console.error(error);
-    });
+      });
   }
   function onLogin({ email, password }) {
     loginApi({ email, password })
-        .then((res) => {
-          if (res.token) {
-            localStorage.setItem('token', res.token);
-            localStorage.setItem('isLogin', true);
-            setCurrentUser(
-              {
-                email: res.email,
-                name: res.name,
-                _id: res._id
-              }
-            );
-            setIsLogin(true);
-            setInfoTipText('Вход выполнен!');
-            }
-          if (res.message) {
-            setSubmitError(res.message);
-            throw new Error()
-          }
-        })
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          localStorage.setItem("isLogin", true);
+          setCurrentUser({
+            email: res.email,
+            name: res.name,
+            _id: res._id,
+          });
+          setIsLogin(true);
+          setInfoTipText("Вход выполнен!");
+        }
+        if (res.message) {
+          setSubmitError(res.message);
+          throw new Error();
+        }
+      })
       .then(() => {
-        handleCloseAllPopups() ;
+        handleCloseAllPopups();
       })
       .then(() => {
         handlePopupInfoTip();
@@ -207,15 +219,15 @@ function App() {
     signupApi({ password, email, name })
       .then((res) => {
         if (res.email) {
-          setInfoTipText('Вы успешно зарегистрировались!');
+          setInfoTipText("Вы успешно зарегистрировались!");
         }
         if (res.message) {
           setSubmitError(res.message);
-          throw new Error()
+          throw new Error();
         }
       })
       .then(() => {
-        handleCloseAllPopups() ;
+        handleCloseAllPopups();
       })
       .then(() => {
         handlePopupInfoTip();
@@ -225,16 +237,15 @@ function App() {
       });
   }
   function checkToken() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       checkTokenApi(token).then((res) => {
         if (res) {
-          setCurrentUser(
-            {
-              email: res.email,
-              name: res.name,
-              _id: res._id
-            });
+          setCurrentUser({
+            email: res.email,
+            name: res.name,
+            _id: res._id,
+          });
           setIsLogin(true);
         }
       });
@@ -242,28 +253,27 @@ function App() {
   }
   function handlePopupSubmit(ev) {
     ev.preventDefault();
-    if (isPopupForSignupOpen){
+    if (isPopupForSignupOpen) {
       onSignup({
-          password: values.password,
-          email: values.email,
-          name: values.name 
-        }
-      );
-    } if (isPopupForLoginOpen) {
-       onLogin({
-          password: values.password,
-          email: values.email,
-        }
-      );
+        password: values.password,
+        email: values.email,
+        name: values.name,
+      });
     }
-  }   
-  
+    if (isPopupForLoginOpen) {
+      onLogin({
+        password: values.password,
+        email: values.email,
+      });
+    }
+  }
+
   useEffect(() => {
-    const savedSearchResult = localStorage.getItem('savedSearchResult');
-    const savedCurrentKeyword = localStorage.getItem('currentKeyword');
-    if (savedSearchResult && savedCurrentKeyword){
+    const savedSearchResult = localStorage.getItem("savedSearchResult");
+    const savedCurrentKeyword = localStorage.getItem("currentKeyword");
+    if (savedSearchResult && savedCurrentKeyword) {
       setSearchResult(JSON.parse(savedSearchResult));
-      setCurrentKeyword(savedCurrentKeyword)
+      setCurrentKeyword(savedCurrentKeyword);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
@@ -272,78 +282,78 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
   useEffect(() => {
-    handleHeaderChange(pathname)
+    handleHeaderChange(pathname);
   }, [pathname]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className='app'>
-      <Header
-        isLogin={isLogin}
-        isHeaderBlack={isHeaderBlack}
-        onPopupForSignup={handlePopupForSignup}
-        onLogout={logout}
-        isMobilePopupOpen={isMobilePopupOpen}
-        onMobilePopupOpen={handleMobilePopup}
-      />
-      <Switch>
-        <Route exact path='/'>
-          <Main
-            onSaveArticle={saveArticle}
-            onDeleteArticle={deleteArticle}
-            onGetArticles={getSearchResult}
-            searchResult={searchResult}
-            isSearchCompleted={isSearchCompleted}
-            keyword={currentKeyword}
-            isRenderLoading={isRenderLoading}
-            isLogin={isLogin}
-          />
-        </Route>
-        <ProtectedRoute
-          path='/saved-news'
-          component={SavedNews}
+      <div className="app">
+        <Header
           isLogin={isLogin}
+          isHeaderBlack={isHeaderBlack}
           onPopupForSignup={handlePopupForSignup}
-          savedArticles={savedArticles}
-          sortedKeywords={sortedKeywords}
-          getSavedArticles={getSavedArticles}
-          onDeleteArticle={deleteArticle}
+          onLogout={logout}
+          isMobilePopupOpen={isMobilePopupOpen}
+          onMobilePopupOpen={handleMobilePopup}
         />
-      </Switch>
-      <Footer/>
-      <PopupForLogin
-        isPopupForLoginOpen={isPopupForLoginOpen}
-        onClose={handleCloseAllPopups}
-        onPopupForSignup={handlePopupForSignup}
-        onOverlayClick={handleOverlayClick}
-        onSubmit={handlePopupSubmit}
-        isValid={isValid}
-        onChange={handleChange}
-        values={values}
-        errors={errors}
-        submitError={submitError}
-      />
-      <PopupForSignup
-        isPopupForSignupOpen={isPopupForSignupOpen}
-        onClose={handleCloseAllPopups}
-        onPopupForLogin={handlePopupForLogin}
-        onSubmit={handlePopupSubmit}
-        onOverlayClick={handleOverlayClick}
-        isValid={isValid}
-        onChange={handleChange}
-        values={values}
-        errors={errors}
-        submitError={submitError}
-      />
-      <PopupInfoTip
-        isLogin={isLogin}
-        infoTipText={infoTipText}
-        isOpen={isPopupInfoTipOpen}
-        onClose={handleCloseAllPopups}
-        onPopupForLogin={handlePopupForLogin}
-        onOverlayClick={handleOverlayClick}
-      />
-    </div>
+        <Switch>
+          <ProtectedRoute
+            path="/saved-news"
+            component={SavedNews}
+            isLogin={isLogin}
+            onPopupForSignup={handlePopupForSignup}
+            savedArticles={savedArticles}
+            sortedKeywords={sortedKeywords}
+            getSavedArticles={getSavedArticles}
+            onDeleteArticle={deleteArticle}
+          />
+          <Route path="/">
+            <Main
+              onSaveArticle={saveArticle}
+              onDeleteArticle={deleteArticle}
+              onGetArticles={getSearchResult}
+              searchResult={searchResult}
+              isSearchCompleted={isSearchCompleted}
+              keyword={currentKeyword}
+              isRenderLoading={isRenderLoading}
+              isLogin={isLogin}
+            />
+          </Route>
+        </Switch>
+        <Footer />
+        <PopupForLogin
+          isPopupForLoginOpen={isPopupForLoginOpen}
+          onClose={handleCloseAllPopups}
+          onPopupForSignup={handlePopupForSignup}
+          onOverlayClick={handleOverlayClick}
+          onSubmit={handlePopupSubmit}
+          isValid={isValid}
+          onChange={handleChange}
+          values={values}
+          errors={errors}
+          submitError={submitError}
+        />
+        <PopupForSignup
+          isPopupForSignupOpen={isPopupForSignupOpen}
+          onClose={handleCloseAllPopups}
+          onPopupForLogin={handlePopupForLogin}
+          onSubmit={handlePopupSubmit}
+          onOverlayClick={handleOverlayClick}
+          isValid={isValid}
+          onChange={handleChange}
+          values={values}
+          errors={errors}
+          submitError={submitError}
+        />
+        <PopupInfoTip
+          isLogin={isLogin}
+          infoTipText={infoTipText}
+          isOpen={isPopupInfoTipOpen}
+          onClose={handleCloseAllPopups}
+          onPopupForLogin={handlePopupForLogin}
+          onOverlayClick={handleOverlayClick}
+        />
+      </div>
     </CurrentUserContext.Provider>
   );
 }
