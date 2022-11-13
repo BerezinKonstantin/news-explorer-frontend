@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function NewsCard(props) {
@@ -19,7 +19,9 @@ function NewsCard(props) {
   const cardSource = `${
     location === "/" ? props.card.source.name : props.card.source
   }`;
-
+  useEffect(() => {
+    setIsCardSaved(false);
+  }, [props]);
   function handleSaveArticle() {
     if (props.isLogin && !isCardSaved) {
       if (location === "/") {
