@@ -69,7 +69,7 @@ function App() {
     if (pathname === "/saved-news") {
       setIsHeaderBlack(true);
     }
-    if (pathname === "/") {
+    if (pathname === "/news-explorer-frontend") {
       setIsHeaderBlack(false);
     }
   }
@@ -110,7 +110,7 @@ function App() {
     localStorage.removeItem("isLogin");
     localStorage.removeItem("currentKeyword");
     localStorage.removeItem(searchResult);
-    history.push("/");
+    history.push("/news-explorer-frontend");
   }
   function handleOverlayClick(evt) {
     if (evt.target.classList.contains("popup")) {
@@ -297,17 +297,7 @@ function App() {
           onMobilePopupOpen={handleMobilePopup}
         />
         <Switch>
-          <ProtectedRoute
-            path="/saved-news"
-            component={SavedNews}
-            isLogin={isLogin}
-            onPopupForSignup={handlePopupForSignup}
-            savedArticles={savedArticles}
-            sortedKeywords={sortedKeywords}
-            getSavedArticles={getSavedArticles}
-            onDeleteArticle={deleteArticle}
-          />
-          <Route path="/">
+          <Route path="/news-explorer-frontend">
             <Main
               onSaveArticle={saveArticle}
               onDeleteArticle={deleteArticle}
@@ -319,6 +309,16 @@ function App() {
               isLogin={isLogin}
             />
           </Route>
+          <ProtectedRoute
+            path="/saved-news"
+            component={SavedNews}
+            isLogin={isLogin}
+            onPopupForSignup={handlePopupForSignup}
+            savedArticles={savedArticles}
+            sortedKeywords={sortedKeywords}
+            getSavedArticles={getSavedArticles}
+            onDeleteArticle={deleteArticle}
+          />
         </Switch>
         <Footer />
         <PopupForLogin

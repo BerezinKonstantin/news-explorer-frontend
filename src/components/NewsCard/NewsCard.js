@@ -6,25 +6,37 @@ function NewsCard(props) {
   const [isButtonOnFocus, setIsButtonOnFocus] = useState(false);
   const location = useLocation().pathname;
   const cardText = `${
-    location === "/" ? props.card.description : props.card.text
+    location === "/news-explorer-frontend"
+      ? props.card.description
+      : props.card.text
   }`;
-  const cardLink = `${location === "/" ? props.card.url : props.card.link}`;
+  const cardLink = `${
+    location === "/news-explorer-frontend" ? props.card.url : props.card.link
+  }`;
   const imgSource = `${
-    location === "/" ? props.card.urlToImage : props.card.image
+    location === "/news-explorer-frontend"
+      ? props.card.urlToImage
+      : props.card.image
   }`;
-  const keyword = `${location === "/" ? props.keyword : props.card.keyword}`;
+  const keyword = `${
+    location === "/news-explorer-frontend" ? props.keyword : props.card.keyword
+  }`;
   const cardDate = `${
-    location === "/" ? props.card.publishedAt : props.card.date
+    location === "/news-explorer-frontend"
+      ? props.card.publishedAt
+      : props.card.date
   }`;
   const cardSource = `${
-    location === "/" ? props.card.source.name : props.card.source
+    location === "/news-explorer-frontend"
+      ? props.card.source.name
+      : props.card.source
   }`;
   useEffect(() => {
     setIsCardSaved(false);
   }, [props]);
   function handleSaveArticle() {
     if (props.isLogin && !isCardSaved) {
-      if (location === "/") {
+      if (location === "/news-explorer-frontend") {
         const data = {
           link: props.card.url,
           keyword: props.keyword,
@@ -44,7 +56,7 @@ function NewsCard(props) {
     setIsCardSaved(false);
   }
   function handleClick() {
-    if (location === "/") {
+    if (location === "/news-explorer-frontend") {
       handleSaveArticle();
     }
     if (location === "/saved-news") {
@@ -90,7 +102,7 @@ function NewsCard(props) {
         <p className="card__source">{cardSource}</p>
       </a>
       <p className="card__tag">{keyword}</p>
-      {location === "/" ? (
+      {location === "/news-explorer-frontend" ? (
         <button
           className={
             "card__button card__button_save" +
