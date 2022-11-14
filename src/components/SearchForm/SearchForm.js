@@ -2,21 +2,26 @@ import React from "react";
 
 function SearchForm(props) {
   const searchInput = React.useRef();
+  const searchBlock = React.useRef();
   const [isValid, setIsValid] = React.useState(false);
   const [isErrHide, setIsErrHide] = React.useState(true);
   const handleChange = (ev) => {
     setIsValid(ev.target.closest("form").checkValidity());
   };
+  const scrollToSearch = () => {
+    window.scrollTo(0, searchBlock.current.scrollHeight);
+  };
   function handleSubmit(ev) {
     ev.preventDefault();
     props.onGetArticles(searchInput.current.value);
+    scrollToSearch();
   }
   function handleErrHide() {
     setIsErrHide(false);
   }
 
   return (
-    <div className="search-form">
+    <div ref={searchBlock} className="search-form">
       <h1 className="search-form__title">Что творится в мире?</h1>
       <p className="search-form__subtitle">
         Находите самые свежие статьи на любую тему и сохраняйте в своём личном
