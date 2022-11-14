@@ -36,6 +36,18 @@
   line-height: 24px;
   margin: 0;
 }
+.about__github-link-wrap {
+  display: flex;
+  flex-direction: row;
+}
+.about__github-link {
+  font-family: "Roboto Slab", Arial, sans-serif;
+  font-weight: 600;
+  color: rgb(4, 4, 75);
+  text-decoration: none;
+  cursor: pointer;
+  margin: 5px 6px 0 0;
+}
 /*Tablet version*/
 @media (max-width: 1027px) {
   .about__avatar {
