@@ -25,7 +25,7 @@
   object-fit: cover;
 }
 .card__date {
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-family: "Source Sans Pro", Arial, sans-serif;
   font-size: 18px;
   line-height: 24px;
   text-align: left;
@@ -35,7 +35,7 @@
   height: 24px;
 }
 .card__title {
-  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-family: "Roboto Slab", Arial, sans-serif;
   font-size: 26px;
   line-height: 30px;
   text-align: left;
@@ -62,7 +62,7 @@
   min-height: 110px;
 }
 .card__source {
-  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-family: "Roboto Slab", Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;

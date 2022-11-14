@@ -14,7 +14,7 @@
 }
 .search-form__title {
   display: flex;
-  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-family: "Roboto Slab", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 60px;
@@ -41,7 +41,7 @@
 .search-form__error {
   margin: auto auto 10px;
   position: absolute;
-  top: -20px;
+  top: -24px;
   left: 24px;
 }
 .search-form__input-wrapper {
