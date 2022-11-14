@@ -11,7 +11,7 @@ function Footer() {
       </p>
       <nav className="footer__nav">
         <div className="footer__nav-wrapper">
-          <Link className="footer__link" to="/news-explorer-frontend">
+          <Link className="footer__link" to="/news-explorer-frontend/">
             Главная
           </Link>
           <a

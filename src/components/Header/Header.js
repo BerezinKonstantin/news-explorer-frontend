@@ -52,7 +52,7 @@ function Header(props) {
                 ? " header__link_black-version header__logo_black-version"
                 : "")
             }
-            to="/news-explorer-frontend"
+            to="/news-explorer-frontend/"
           >
             NewsExplorer
           </Link>
@@ -93,7 +93,7 @@ function Header(props) {
                 "header__main header__link" +
                 (props.isHeaderBlack ? " header__link_black-version" : "")
               }
-              to="/news-explorer-frontend"
+              to="/news-explorer-frontend/"
             >
               Главная
             </NavLink>

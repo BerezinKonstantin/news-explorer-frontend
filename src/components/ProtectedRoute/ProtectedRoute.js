@@ -15,7 +15,7 @@ const ProtectedRoute = ({ component: Component, ...props }) => {
         props.isLogin || isLoginlocal ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/news-explorer-frontend" />
+          <Redirect to="/news-explorer-frontend/" />
         )
       }
     </Route>

@@ -6,28 +6,28 @@ function NewsCard(props) {
   const [isButtonOnFocus, setIsButtonOnFocus] = useState(false);
   const location = useLocation().pathname;
   const cardText = `${
-    location === "/news-explorer-frontend"
+    location === "/news-explorer-frontend/"
       ? props.card.description
       : props.card.text
   }`;
   const cardLink = `${
-    location === "/news-explorer-frontend" ? props.card.url : props.card.link
+    location === "/news-explorer-frontend/" ? props.card.url : props.card.link
   }`;
   const imgSource = `${
-    location === "/news-explorer-frontend"
+    location === "/news-explorer-frontend/"
       ? props.card.urlToImage
       : props.card.image
   }`;
   const keyword = `${
-    location === "/news-explorer-frontend" ? props.keyword : props.card.keyword
+    location === "/news-explorer-frontend/" ? props.keyword : props.card.keyword
   }`;
   const cardDate = `${
-    location === "/news-explorer-frontend"
+    location === "/news-explorer-frontend/"
       ? props.card.publishedAt
       : props.card.date
   }`;
   const cardSource = `${
-    location === "/news-explorer-frontend"
+    location === "/news-explorer-frontend/"
       ? props.card.source.name
       : props.card.source
   }`;
@@ -36,7 +36,7 @@ function NewsCard(props) {
   }, [props]);
   function handleSaveArticle() {
     if (props.isLogin && !isCardSaved) {
-      if (location === "/news-explorer-frontend") {
+      if (location === "/news-explorer-frontend/") {
         const data = {
           link: props.card.url,
           keyword: props.keyword,
@@ -56,7 +56,7 @@ function NewsCard(props) {
     setIsCardSaved(false);
   }
   function handleClick() {
-    if (location === "/news-explorer-frontend") {
+    if (location === "/news-explorer-frontend/") {
       handleSaveArticle();
     }
     if (location === "/saved-news") {
@@ -102,7 +102,7 @@ function NewsCard(props) {
         <p className="card__source">{cardSource}</p>
       </a>
       <p className="card__tag">{keyword}</p>
-      {location === "/news-explorer-frontend" ? (
+      {location === "/news-explorer-frontend/" ? (
         <button
           className={
             "card__button card__button_save" +

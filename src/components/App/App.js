@@ -69,7 +69,7 @@ function App() {
     if (pathname === "/saved-news") {
       setIsHeaderBlack(true);
     }
-    if (pathname === "/news-explorer-frontend") {
+    if (pathname === "/news-explorer-frontend/") {
       setIsHeaderBlack(false);
     }
   }
@@ -110,7 +110,7 @@ function App() {
     localStorage.removeItem("isLogin");
     localStorage.removeItem("currentKeyword");
     localStorage.removeItem(searchResult);
-    history.push("/news-explorer-frontend");
+    history.push("/news-explorer-frontend/");
   }
   function handleOverlayClick(evt) {
     if (evt.target.classList.contains("popup")) {
@@ -297,7 +297,7 @@ function App() {
           onMobilePopupOpen={handleMobilePopup}
         />
         <Switch>
-          <Route path="/news-explorer-frontend">
+          <Route path="/news-explorer-frontend/">
             <Main
               onSaveArticle={saveArticle}
               onDeleteArticle={deleteArticle}
