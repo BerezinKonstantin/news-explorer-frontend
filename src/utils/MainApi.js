@@ -34,14 +34,11 @@ export const login = ({ password, email }) => {
     }),
   })
     .then((response) => {
-      console.log(response);
       return response.json();
     })
     .then((res) => {
-      console.log(res);
       return res;
-    })
-    .catch((err) => console.log(err));
+    });
 };
 
 export const getArticles = (token) => {
