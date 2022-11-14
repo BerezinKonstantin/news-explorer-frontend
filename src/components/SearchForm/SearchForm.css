@@ -137,6 +137,7 @@
     flex-direction: column;
   }
   .search-form__error {
+    font-size: 14px;
     top: -36px;
   }
 }
